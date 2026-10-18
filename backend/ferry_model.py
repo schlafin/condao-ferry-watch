@@ -48,34 +48,63 @@ def eta_for_waypoint(depart_dt, index, n, crossing_hours=config.CROSSING_HOURS):
     return depart_dt + timedelta(hours=crossing_hours * frac)
 
 
+SCORE_INPUTS = {
+    # name in the result: (which forecast, Open-Meteo variable)
+    "swell_m": ("marine", "swell_wave_height"),
+    "swell_period_s": ("marine", "swell_wave_period"),
+    "swell_dir_deg": ("marine", "swell_wave_direction"),
+    "wind_wave_m": ("marine", "wind_wave_height"),
+    "secondary_swell_m": ("marine", "secondary_swell_wave_height"),
+    "wind_kmh": ("wind", "wind_speed_10m"),
+}
+
+
 def score_segment(hourly_marine, hourly_wind, hour_index, route_bearing):
     """Combine wave/swell/wind data at one waypoint and hour into a single
-    discomfort score. Higher = rougher. See config.py for thresholds."""
-    swell_h = hourly_marine["swell_wave_height"][hour_index] or 0
-    swell_period = hourly_marine["swell_wave_period"][hour_index] or 0
-    swell_dir = hourly_marine["swell_wave_direction"][hour_index] or 0
-    wind_wave_h = hourly_marine["wind_wave_height"][hour_index] or 0
-    sec_swell_series = hourly_marine.get("secondary_swell_wave_height") or []
-    sec_swell_h = sec_swell_series[hour_index] if hour_index < len(sec_swell_series) else 0
-    sec_swell_h = sec_swell_h or 0
+    discomfort score. Higher = rougher. See config.py for thresholds.
 
-    wind_speed_kmh = hourly_wind["wind_speed_10m"][hour_index] or 0
-    wind_speed_kt = wind_speed_kmh * 0.539957
+    Returns (score, parts), where parts shows how much each component
+    contributed. If any input is missing, returns (None, {"missing": [...]})
+    -- a missing value is unknown, never treated as calm.
+    """
+    series = {"marine": hourly_marine, "wind": hourly_wind}
+    values, missing = {}, []
+    for name, (source, var) in SCORE_INPUTS.items():
+        column = series[source].get(var) or []
+        value = column[hour_index] if hour_index < len(column) else None
+        if value is None:
+            missing.append(var)
+        values[name] = value
+    if missing:
+        return None, {"missing": missing}
 
-    score = swell_h
-
+    wind_kt = values["wind_kmh"] * 0.539957
     lo, hi = config.RESONANCE_PERIOD_RANGE
-    if lo <= swell_period <= hi:
-        score *= config.RESONANCE_MULTIPLIER
+    resonance_x = config.RESONANCE_MULTIPLIER if lo <= values["swell_period_s"] <= hi else 1.0
+    off_bow = angle_off_bow(route_bearing, values["swell_dir_deg"])
+    beam_x = 1 + 0.5 * math.sin(math.radians(off_bow))
 
-    beam_angle = angle_off_bow(route_bearing, swell_dir)
-    score *= (1 + 0.5 * math.sin(math.radians(beam_angle)))
-
-    score += wind_wave_h * config.WIND_WAVE_WEIGHT
-    score += sec_swell_h * config.SECONDARY_SWELL_WEIGHT
-    score += wind_speed_kt / config.WIND_SPEED_DIVISOR_KT
-
-    return score
+    contributions = {
+        "swell": values["swell_m"] * resonance_x * beam_x,
+        "wind_waves": values["wind_wave_m"] * config.WIND_WAVE_WEIGHT,
+        "secondary_swell": values["secondary_swell_m"] * config.SECONDARY_SWELL_WEIGHT,
+        "wind": wind_kt / config.WIND_SPEED_DIVISOR_KT,
+    }
+    score = sum(contributions.values())
+    parts = {
+        "contributions": {k: round(v, 3) for k, v in contributions.items()},
+        "inputs": {
+            "swell_m": values["swell_m"],
+            "swell_period_s": values["swell_period_s"],
+            "swell_off_bow_deg": round(off_bow),
+            "wind_wave_m": values["wind_wave_m"],
+            "secondary_swell_m": values["secondary_swell_m"],
+            "wind_kt": round(wind_kt, 1),
+        },
+        "resonance_x": resonance_x,
+        "beam_x": round(beam_x, 3),
+    }
+    return score, parts
 
 
 def classify(score):

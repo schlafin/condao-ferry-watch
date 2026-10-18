@@ -161,6 +161,21 @@ meaningfully from one end to the other. The model:
 4. Compute the initial bearing of the route (for angle-of-attack
    scoring, §5).
 
+**Forecast resolution limit (verified 2026-10-18).** Open-Meteo's marine
+model is a 1/12° grid, about 9.2 km between cells. Its default
+`cell_selection=sea` silently moves any request on land to the nearest sea
+cell rather than returning blanks. Two consequences:
+- The Cầu Đá port coordinates snapped to a cell NE of the port, on the
+  open east side of the Vung Tau peninsula, which the ferry never crosses.
+- Côn Đảo island is too small to exist in the model: every cell around
+  Bến Đầm is open sea, so the model can't see the island's shelter.
+
+So the first and last route points are **pinned to explicit grid-cell
+centres on the route** (`VT_ROUTE_CELL`, `CD_ROUTE_CELL` in
+`backend/config.py`), ~6 km SSW of Cầu Đá and ~10 km N of Bến Đầm on the
+straight-line approach. The forecast is an open-sea estimate: harbors,
+bays and the final approach are a rough guess at best.
+
 ## 5. Scoring model
 
 Wave height alone is a poor predictor of ride comfort. What actually
@@ -170,7 +185,13 @@ matters, in rough order of importance for a large vessel:
 - **Swell period** — long-period swell can resonate with a vessel's roll
   more than short wind-chop of the same height. We don't have Thăng
   Long's actual roll-resonance period; treat any period-based penalty as
-  a heuristic pending calibration (§7), not fact.
+  a heuristic pending calibration (§7), not fact. Published dimensions:
+  77.46 m long, 9.5 m beam (one source: 11.1 m), 2.2 m draft, a slender
+  monohull. Its metacentric height (GM) isn't public; the IMO roll-period
+  estimate T ≈ 8.3/√GM s gives ~5–8.5 s for a plausible GM of 1–3 m, so
+  that's the penalized band. (Not yet modelled: at ~32 kn the *encounter*
+  period differs from the wave period: following seas arrive slower and
+  head seas faster.)
 - **Angle between swell direction and the ship's heading** — beam seas
   (swell hitting roughly broadside, ~90° off the bow) cause rolling,
   which is what actually makes people seasick. Head or following seas
@@ -205,6 +226,12 @@ rest is glassy.
 Classify into GREEN / YELLOW / RED via two threshold constants. **These
 thresholds are unvalidated guesses** — see §7 before trusting them for
 real trip planning.
+
+**Missing data is unknown, never calm.** A point with any missing input
+gets no score. A departure with more than `MAX_MISSING_POINTS` (1) unknown
+points is rated **NO_DATA** rather than a possibly false GREEN. Each
+departure in `state.json` also carries its 7 points with their score and
+each component's contribution, for the app's drill-down view.
 
 ## 6. Notification design
 
