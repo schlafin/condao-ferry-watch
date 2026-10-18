@@ -1,0 +1,25 @@
+# Secrets — never commit these (use GitHub Actions secrets instead)
+.env
+.env.*
+*.p8
+*.pem
+*.key
+secrets/
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+
+# Logs and local scratch
+*.log

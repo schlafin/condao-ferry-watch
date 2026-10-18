@@ -1,0 +1,40 @@
+name: Con Dao ferry smoothness check
+
+on:
+  schedule:
+    # 06:00 and 18:00 ICT (UTC+7) = 23:00 and 11:00 UTC
+    - cron: "0 23,11 * * *"
+  workflow_dispatch: {}   # lets you trigger a manual run from the Actions tab to test
+
+permissions:
+  contents: write   # needed to commit state.json back to the repo
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Run check
+        env:
+          APNS_KEY_ID: ${{ secrets.APNS_KEY_ID }}
+          APNS_TEAM_ID: ${{ secrets.APNS_TEAM_ID }}
+          APNS_AUTH_KEY: ${{ secrets.APNS_AUTH_KEY }}
+          APNS_DEVICE_TOKEN: ${{ secrets.APNS_DEVICE_TOKEN }}
+          APNS_BUNDLE_ID: ${{ secrets.APNS_BUNDLE_ID }}
+          APNS_ENV: sandbox   # switch to production only after Developer ID signing
+        run: python main.py
+
+      - name: Persist state
+        run: |
+          git config user.name "ferry-watch-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state.json
+          git diff --cached --quiet || git commit -m "Update ferry state [skip ci]"
+          git push
