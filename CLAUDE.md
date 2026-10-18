@@ -85,8 +85,11 @@ generality or polish.
      of the Vung Tau peninsula, off the ferry's route. Use **10.292,
      107.042** (first open-water cell SSW, on the route) instead. Con Dao
      island does not exist in the model (every cell around Bến Đầm is sea),
-     so pick an approach-side cell, likely **8.792,106.625**; Michael is
-     checking which side the ferry approaches from.
+     so use **8.792,106.625**, about 10 km N on the straight-line approach.
+     Both cells checked on a map and approved by Michael (2026-10-18). The
+     ferry docks on Con Dao's SW side, but the score is meant to reflect
+     open-sea conditions; the last minutes of sheltered docking don't
+     matter.
   2. **Missing-data guard.** Treat null forecast values as unknown, not 0
      (calm); rate a departure "no data" if too many points are unknown.
      Log missing counts per run. (No nulls observed on 2026-10-18; this is

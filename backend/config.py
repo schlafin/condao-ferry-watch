@@ -19,6 +19,8 @@ BEN_DAM_PORT = (8.6975, 106.6017)   # Con Dao
 #   Vung Tau: first open-water cell SSW of Cau Da, on the route.
 #   Con Dao: the island doesn't exist in the model (every cell around it is
 #   sea), so use the cell on the straight-line approach, ~10 km north.
+#   (The ferry docks on the island's SW side; the score is meant to cover
+#   open-sea conditions, not the last minutes of sheltered docking.)
 VT_ROUTE_CELL = (10.2917, 107.0417)
 CD_ROUTE_CELL = (8.7917, 106.6250)
 
