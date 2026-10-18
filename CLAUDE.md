@@ -4,7 +4,29 @@ Read `condao-ferry-watch-design.md` in this folder first — that's the
 full spec. This file is just the short, every-session context Claude
 Code should hold onto without being re-told.
 
-## What this is
+## Why this project exists
+
+This is primarily a **learning project**, not a product. The ferry
+watcher is a realistic, low-stakes example for Michael to learn:
+
+1. **Git and GitHub** — commits, version history, reverting, pushing,
+   and running scheduled jobs in the cloud with **GitHub Actions** so
+   nothing depends on his Mac being on.
+2. **Xcode and macOS app development** — building, signing and running
+   a small native Mac app.
+
+The core thing being tested is the end-to-end chain: a **scheduled
+GitHub Action produces data and that data reaches the macOS app**
+(fetched `state.json`, and later push notifications).
+
+When choosing between options, favor the one that teaches the
+GitHub/Xcode workflow clearly over the one that makes the ferry
+forecast more accurate. Keep the weather/scoring logic as simple as
+possible until the pipeline works end to end. Explain git, GitHub and
+Xcode steps as you do them — Michael wants to understand them, while
+Claude handles the GitHub side (commits, pushes, workflows) for him.
+
+## What it does
 
 A personal tool for Michael that watches sea conditions along the Vung
 Tau ⇄ Con Dao ferry route (a specific vessel, "Thăng Long," operated by
@@ -15,9 +37,18 @@ generality or polish.
 
 ## Current status (update this section as work progresses)
 
-- GitHub repo created and set to **public**:
-  https://github.com/schlafin/condao-ferry-watch — currently empty,
-  nothing pushed yet.
+- GitHub repo is **public** at
+  https://github.com/schlafin/condao-ferry-watch, local copy at
+  `~/Claude/Projects/condao-ferry-watch`. Initial commit pushed
+  (CLAUDE.md, design doc, reference sketch, .gitignore).
+- No workflow runs yet: `ferry-check.yml` sits inside `reference-sketch/`,
+  and GitHub only runs workflows from a top-level `.github/workflows/`.
+  The GitHub CLI login lacks the `workflow` scope — run
+  `gh auth refresh -s workflow` (one browser approval) before pushing
+  workflow files there.
+- `reference-sketch/README.md` is out of date vs. the design doc (says
+  twice daily instead of every 6 hours, and mentions a `ROUTE_ACTIVE`
+  flag the design dropped). The design doc wins.
 - Xcode is being installed locally. No Apple Developer Program
   enrollment yet, no APNs credentials generated yet.
 - `reference-sketch/` in this folder is a rough v1 code draft from an
