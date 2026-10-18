@@ -39,33 +39,33 @@ generality or polish.
 
 - GitHub repo is **public** at
   https://github.com/schlafin/condao-ferry-watch, local copy at
-  `~/Claude/Projects/condao-ferry-watch`. Initial commit pushed
-  (CLAUDE.md, design doc, reference sketch, .gitignore).
-- Milestone 1 backend lives in `backend/` (run locally with
-  `.venv/bin/python backend/main.py [--test-event]`), with the workflow at
-  `.github/workflows/ferry-check.yml`. It writes `state.json` at the repo
-  root: `departures` (latest ratings) plus `events` (rating changes from
-  this run, each with a unique `id`). The Mac app posts events it hasn't
-  seen; it never compares ratings itself. Events last only until the next
-  run (6h), so a Mac asleep longer than that misses them — acceptable
-  until APNs (milestone 2). Built on branch `m1-backend` → PR.
-- Pushing workflow files needs the GitHub CLI's `workflow` scope:
-  `gh auth refresh -s workflow` (one browser approval).
-- `reference-sketch/README.md` is out of date vs. the design doc (says
-  twice daily instead of every 6 hours, and mentions a `ROUTE_ACTIVE`
-  flag the design dropped). The design doc wins.
-- Xcode is installed (/Applications/Xcode.app). No Apple Developer Program
-  enrollment yet, no APNs credentials generated yet.
-- **Planned first milestone (agreed 2026-10-18): skip APNs at first.**
-  Have the Mac app fetch `state.json` on a timer and post a **local**
-  macOS notification when a rating changes. This tests the full
-  GitHub Action → repo → Mac app chain with no $99 Apple Developer
-  enrollment, no .p8 key and no secrets. Add real APNs push afterwards
-  as a second milestone.
-- `reference-sketch/` in this folder is a rough v1 code draft from an
-  earlier design conversation — untested, never run. Treat it as a
-  starting point to rewrite or restructure freely, not a spec to follow
-  literally. The design doc is the spec; the sketch is just scaffolding.
+  `~/Claude/Projects/condao-ferry-watch`. Work goes on a branch → PR →
+  merge (Michael chose this to learn the PR flow).
+- **Milestone 1 (local notifications, no APNs) works end to end**, verified
+  2026-10-18: workflow run → bot commits `state.json` → Mac app fetches it
+  → macOS notification.
+  - Backend: `backend/` (run locally with
+    `.venv/bin/python backend/main.py [--test-event]`); workflow at
+    `.github/workflows/ferry-check.yml`, every 6h plus a manual trigger
+    with a `test_event` checkbox. `state.json` at the repo root holds
+    `departures` (latest ratings) and `events` (rating changes from this
+    run, each with a unique `id`). A first-time rating only makes an event
+    if it isn't RED.
+  - Mac app: Xcode project in `ConDaoFerryWatch/` (SwiftUI `MenuBarExtra`,
+    menu-bar only, signed with Michael's free Personal Team, App Sandbox +
+    outgoing network). Fetches the raw `state.json` at launch, every 30
+    min, and whenever the dropdown opens; posts each unseen event as a
+    local notification. It never computes ratings.
+  - Known limits: events last only until the next run (6h), so a Mac
+    asleep longer misses them (fixed by APNs in milestone 2). One run
+    failed on an Open-Meteo read timeout; there is no retry yet.
+- **Next: milestone 2, APNs push** (needs the $99 Apple Developer Program,
+  a .p8 key and the five GitHub secrets; design doc §6, §10).
+- The GitHub CLI login now has the `workflow` scope (needed to push files
+  under `.github/workflows/`).
+- `reference-sketch/` is the old untested v1 draft, now superseded by
+  `backend/` and `ConDaoFerryWatch/`; its README is out of date. The
+  design doc wins.
 
 ## Hold onto these — easy to accidentally drift from across sessions
 
