@@ -112,9 +112,11 @@ generality or polish.
   Michael on 2026-10-18.
 - The GitHub CLI login now has the `workflow` scope (needed to push files
   under `.github/workflows/`).
-- `reference-sketch/` is the old untested v1 draft, now superseded by
-  `backend/` and `ConDaoFerryWatch/`; its README is out of date. The
-  design doc wins.
+- The old untested `reference-sketch/` v1 draft was deleted on 2026-10-18,
+  superseded by `backend/` and `ConDaoFerryWatch/`. It's still in git
+  history (`git show b03065b:reference-sketch/...`) if ever needed.
+- Workflow uses `actions/checkout@v7` and `actions/setup-python@v7` (Node
+  24); the v4/v5 versions triggered Node 20 deprecation warnings.
 
 ## Hold onto these — easy to accidentally drift from across sessions
 

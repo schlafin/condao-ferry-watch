@@ -1,11 +1,11 @@
 # Con Dao Ferry Watch — Design Document
 
 **Repo:** https://github.com/schlafin/condao-ferry-watch
-**Status:** Design complete, not yet implemented in the repo. A draft v1
-sketch of the code (Python scoring engine, GitHub Actions workflow, Swift
-app skeleton) was produced in an earlier chat session and exists as a
-local zip — treat it as a reference sketch, not a locked spec. Rewrite or
-restructure freely as long as the behavior below is preserved.
+**Status:** Milestone 1 implemented (2026-10-18): `backend/` plus the
+workflow produce `state.json`, and the `ConDaoFerryWatch/` Mac app shows it
+and posts local notifications. APNs push (§6) is deferred; see CLAUDE.md
+for the free-tier plan. The original reference sketch was removed once
+superseded (it's still in git history).
 
 ---
 
