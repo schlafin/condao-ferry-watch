@@ -41,15 +41,20 @@ generality or polish.
   https://github.com/schlafin/condao-ferry-watch, local copy at
   `~/Claude/Projects/condao-ferry-watch`. Initial commit pushed
   (CLAUDE.md, design doc, reference sketch, .gitignore).
-- No workflow runs yet: `ferry-check.yml` sits inside `reference-sketch/`,
-  and GitHub only runs workflows from a top-level `.github/workflows/`.
-  The GitHub CLI login lacks the `workflow` scope — run
-  `gh auth refresh -s workflow` (one browser approval) before pushing
-  workflow files there.
+- Milestone 1 backend lives in `backend/` (run locally with
+  `.venv/bin/python backend/main.py [--test-event]`), with the workflow at
+  `.github/workflows/ferry-check.yml`. It writes `state.json` at the repo
+  root: `departures` (latest ratings) plus `events` (rating changes from
+  this run, each with a unique `id`). The Mac app posts events it hasn't
+  seen; it never compares ratings itself. Events last only until the next
+  run (6h), so a Mac asleep longer than that misses them — acceptable
+  until APNs (milestone 2). Built on branch `m1-backend` → PR.
+- Pushing workflow files needs the GitHub CLI's `workflow` scope:
+  `gh auth refresh -s workflow` (one browser approval).
 - `reference-sketch/README.md` is out of date vs. the design doc (says
   twice daily instead of every 6 hours, and mentions a `ROUTE_ACTIVE`
   flag the design dropped). The design doc wins.
-- Xcode is being installed locally. No Apple Developer Program
+- Xcode is installed (/Applications/Xcode.app). No Apple Developer Program
   enrollment yet, no APNs credentials generated yet.
 - **Planned first milestone (agreed 2026-10-18): skip APNs at first.**
   Have the Mac app fetch `state.json` on a timer and post a **local**
