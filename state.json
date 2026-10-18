@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T17:58:35+07:00",
+  "generated_at": "2026-10-18T18:03:47+07:00",
   "schedule_mode": "standard",
   "thresholds": {
     "green_max": 1.0,
@@ -714,7 +714,7 @@
       "depart": "2026-10-24T07:30:00+07:00",
       "score": 1.03,
       "rating": "YELLOW",
-      "previous_rating": "GREEN",
+      "previous_rating": "YELLOW",
       "worst_waypoint": 5,
       "missing_points": 0,
       "in_closure_window": true,
@@ -883,12 +883,5 @@
       ]
     }
   ],
-  "events": [
-    {
-      "id": "2026-10-18T17:58:35+07:00|VT_TO_CD_2026-10-24T07:30",
-      "departure_id": "VT_TO_CD_2026-10-24T07:30",
-      "title": "YELLOW: Vung Tau → Con Dao",
-      "body": "Sat 24 Oct, 07:30 -- score 1.03 (was GREEN)\n⚠️ Falls within the ferry's typical seasonal closure window -- verify the route is running at https://taucaotocthanglong.com/ before booking."
-    }
-  ]
+  "events": []
 }
