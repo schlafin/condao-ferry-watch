@@ -64,19 +64,32 @@ def forecast_at(lat, lon):
     return _forecast_cache[key]
 
 
-def score_departure(leg, depart_dt):
-    """Returns (worst score, index of worst waypoint), or (None, None) if
-    the crossing falls outside the forecast range."""
-    origin, destination = (
-        (config.CAU_DA_PORT, config.BEN_DAM_PORT) if leg == "VT_TO_CD"
-        else (config.BEN_DAM_PORT, config.CAU_DA_PORT)
-    )
-    waypoints = ferry_model.build_waypoints(origin, destination)
-    route_bearing = ferry_model.bearing(origin, destination)
-    n = len(waypoints)
+def route_points(leg):
+    """The 7 points along the route, with both ends pinned to explicit
+    route-side grid cells (see config.VT_ROUTE_CELL / CD_ROUTE_CELL)."""
+    if leg == "VT_TO_CD":
+        origin, destination = config.CAU_DA_PORT, config.BEN_DAM_PORT
+        first, last = config.VT_ROUTE_CELL, config.CD_ROUTE_CELL
+    else:
+        origin, destination = config.BEN_DAM_PORT, config.CAU_DA_PORT
+        first, last = config.CD_ROUTE_CELL, config.VT_ROUTE_CELL
+    points = ferry_model.build_waypoints(origin, destination)
+    points[0], points[-1] = first, last
+    return points, ferry_model.bearing(origin, destination)
 
-    worst_score, worst_index = None, None
-    for i, (lat, lon) in enumerate(waypoints):
+
+def score_departure(leg, depart_dt):
+    """Scores every route point at its own ETA hour.
+
+    Returns (worst score, index of worst point, per-point details), or None
+    if the crossing falls outside the forecast range. Points with missing
+    data have score None; the worst score is over the known points only.
+    """
+    points, route_bearing = route_points(leg)
+    n = len(points)
+
+    details, worst_score, worst_index = [], None, None
+    for i, (lat, lon) in enumerate(points):
         eta = ferry_model.eta_for_waypoint(depart_dt, i, n)
         # Open-Meteo is hourly: round the ETA to the nearest hour.
         eta_hour = (eta + timedelta(minutes=30)).replace(minute=0, second=0, microsecond=0)
@@ -84,11 +97,19 @@ def score_departure(leg, depart_dt):
         try:
             hour_index = marine["time"].index(eta_hour.strftime("%Y-%m-%dT%H:00"))
         except ValueError:
-            return None, None  # beyond the forecast horizon
-        seg = ferry_model.score_segment(marine, wind, hour_index, route_bearing)
-        if worst_score is None or seg > worst_score:
+            return None  # beyond the forecast horizon
+        seg, parts = ferry_model.score_segment(marine, wind, hour_index, route_bearing)
+        details.append({
+            "point": i,
+            "lat": round(lat, 4),
+            "lon": round(lon, 4),
+            "eta": eta_hour.strftime("%H:%M"),
+            "score": None if seg is None else round(seg, 2),
+            **parts,
+        })
+        if seg is not None and (worst_score is None or seg > worst_score):
             worst_score, worst_index = seg, i
-    return worst_score, worst_index
+    return worst_score, worst_index, details
 
 
 def in_closure_window(d):
@@ -98,7 +119,11 @@ def in_closure_window(d):
 
 def event_body(dep):
     when = datetime.fromisoformat(dep["depart"]).strftime("%a %d %b, %H:%M")
-    body = f"{when} -- score {dep['score']:.2f} (was {dep['previous_rating'] or 'unrated'})"
+    if dep["rating"] == "NO_DATA":
+        body = f"{when} -- forecast data missing for {dep['missing_points']} of 7 route points"
+    else:
+        body = f"{when} -- score {dep['score']:.2f}"
+    body += f" (was {dep['previous_rating'] or 'unrated'})"
     if dep["in_closure_window"]:
         body += (
             "\n⚠️ Falls within the ferry's typical seasonal closure window -- "
@@ -113,32 +138,43 @@ def main(test_event=False):
     previous = load_previous_ratings()
 
     departures, events = [], []
+    total_missing = 0
     for leg, depart_dt in upcoming_departures(now.date()):
         if depart_dt < now:
             continue
-        score, worst_i = score_departure(leg, depart_dt)
-        if score is None:
+        result = score_departure(leg, depart_dt)
+        if result is None:
             continue
+        score, worst_i, points = result
+        missing_points = sum(p["score"] is None for p in points)
+        total_missing += sum(len(p.get("missing", [])) for p in points)
         dep_id = f"{leg}_{depart_dt.strftime('%Y-%m-%dT%H:%M')}"
-        rating = ferry_model.classify(score)
+        if missing_points > config.MAX_MISSING_POINTS or score is None:
+            rating = "NO_DATA"
+        else:
+            rating = ferry_model.classify(score)
         dep = {
             "id": dep_id,
             "leg": leg,
             "label": config.LEG_LABELS[leg],
             "depart": depart_dt.isoformat(),
-            "score": round(score, 2),
+            # Always a number so older app builds can decode it; meaningless
+            # when rating is NO_DATA.
+            "score": round(score or 0.0, 2),
             "rating": rating,
             "previous_rating": previous.get(dep_id),
             "worst_waypoint": worst_i,
+            "missing_points": missing_points,
             "in_closure_window": in_closure_window(depart_dt.date()),
+            "points": points,
         }
         departures.append(dep)
 
         # Notify on a change. A departure rated for the first time only
-        # counts if it isn't RED -- otherwise every new day entering the
-        # window during the monsoon season would fire a RED notification.
+        # counts if it isn't RED or NO_DATA -- otherwise every new day
+        # entering the window in the monsoon season would fire a notification.
         prev = dep["previous_rating"]
-        if rating != prev and not (prev is None and rating == "RED"):
+        if rating != prev and not (prev is None and rating in ("RED", "NO_DATA")):
             events.append({
                 "id": f"{generated_at}|{dep_id}",
                 "departure_id": dep_id,
@@ -158,6 +194,7 @@ def main(test_event=False):
         "generated_at": generated_at,
         "schedule_mode": config.SCHEDULE_MODE,
         "thresholds": {"green_max": config.GREEN_MAX, "yellow_max": config.YELLOW_MAX},
+        "missing_values": total_missing,
         "departures": departures,
         "events": events,
     }
@@ -165,9 +202,11 @@ def main(test_event=False):
         json.dump(state, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
-    print(f"Wrote {STATE_PATH.name}: {len(departures)} departures, {len(events)} events")
+    print(f"Wrote {STATE_PATH.name}: {len(departures)} departures, {len(events)} events, "
+          f"{total_missing} missing forecast values")
     for d in departures:
-        print(f"  {d['depart'][:16]}  {d['leg']}  {d['rating']:6}  {d['score']:.2f}")
+        print(f"  {d['depart'][:16]}  {d['leg']}  {d['rating']:7}  {d['score']:.2f}"
+              f"  worst point {d['worst_waypoint']}")
 
 
 if __name__ == "__main__":

@@ -57,10 +57,59 @@ generality or polish.
     min, and whenever the dropdown opens; posts each unseen event as a
     local notification. It never computes ratings.
   - Known limits: events last only until the next run (6h), so a Mac
-    asleep longer misses them (fixed by APNs in milestone 2). One run
-    failed on an Open-Meteo read timeout; there is no retry yet.
-- **Next: milestone 2, APNs push** (needs the $99 Apple Developer Program,
-  a .p8 key and the five GitHub secrets; design doc §6, §10).
+    asleep longer misses them (fixed by APNs in milestone 2). Open-Meteo's
+    marine server has brief outages; requests retry up to 3 times (PR #3),
+    and a run that still fails leaves the previous `state.json` in place.
+- **Direction (2026-10-18): go as far as possible on the free tier first.**
+  APNs ($99) is deferred until Michael decides he needs alerts while the
+  app is closed. Planned free-tier PRs, in order D → A → B → C:
+  - **PR A, real Mac app:** normal window app installed in Applications
+    (Archive → Copy App). A "Show in menu bar" setting (off by default)
+    controls background mode: on = keeps running with a menu-bar icon,
+    checks every 30 min, notifies, and offers Launch at login; off =
+    closing the window quits, and the app updates only while open. Nothing
+    runs invisibly. In open-only mode, mark departures that "changed since
+    you last looked". Clicking a notification opens the window.
+    **Drill-down:** clicking a departure expands it to show every point's
+    score along the path and the biggest contributors (data comes from
+    PR D's per-point detail in `state.json`).
+  - **PR B, desktop widget** (WidgetKit) with a Refresh button and no
+    automatic refresh.
+  - Optional PR C: Shortcuts/Siri action (App Intents).
+- **PR D, in progress on branch `scoring-v2`** (backend only; the current
+  app ignores the new fields):
+  1. **Explicit route-side endpoint cells.** Open-Meteo's marine model is a
+     1/12° (~9.2 km) grid, and its default `cell_selection=sea` silently
+     moves land requests to the nearest sea cell. Verified 2026-10-18:
+     Cầu Đá snaps to 10.375,107.125, NE of the port on the open east side
+     of the Vung Tau peninsula, off the ferry's route. Use **10.292,
+     107.042** (first open-water cell SSW, on the route) instead. Con Dao
+     island does not exist in the model (every cell around Bến Đầm is sea),
+     so use **8.792,106.625**, about 10 km N on the straight-line approach.
+     Both cells checked on a map and approved by Michael (2026-10-18). The
+     ferry docks on Con Dao's SW side, but the score is meant to reflect
+     open-sea conditions; the last minutes of sheltered docking don't
+     matter.
+  2. **Missing-data guard.** Treat null forecast values as unknown, not 0
+     (calm); rate a departure "no data" if too many points are unknown.
+     Log missing counts per run. (No nulls observed on 2026-10-18; this is
+     a safeguard against false GREENs.)
+  3. **Per-point detail in `state.json`:** each departure gets its 7
+     points' scores and the component contributions (swell, resonance and
+     beam multipliers, wind waves, secondary swell, wind) for the app's
+     drill-down.
+  4. **Roll-resonance band from real dimensions:** Thăng Long is 77.46 m
+     long, 9.5 m beam (one source says 11.1 m), 2.2 m draft, a slender
+     monohull (L/B ≈ 8). Its metacentric height (GM) isn't public, so the
+     IMO roll-period estimate T ≈ 8.3/√GM s gives roughly 5–8.5 s for
+     plausible GM of 1–3 m. Narrow `RESONANCE_PERIOD_RANGE` from the guessed
+     6–11 s accordingly; still a heuristic until calibrated (design doc §7).
+  5. Design doc: note the ~9 km resolution limit (harbors, bays and Con Dao
+     island are invisible to the wave model).
+- **Later idea: encounter period.** Roll resonance depends on the period at
+  which waves reach the ship, which at ~32 kn differs a lot from the wave
+  period (following seas arrive slower, head seas faster). Parked by
+  Michael on 2026-10-18.
 - The GitHub CLI login now has the `workflow` scope (needed to push files
   under `.github/workflows/`).
 - `reference-sketch/` is the old untested v1 draft, now superseded by
