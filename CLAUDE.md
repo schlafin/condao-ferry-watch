@@ -51,6 +51,12 @@ generality or polish.
   flag the design dropped). The design doc wins.
 - Xcode is being installed locally. No Apple Developer Program
   enrollment yet, no APNs credentials generated yet.
+- **Planned first milestone (agreed 2026-10-18): skip APNs at first.**
+  Have the Mac app fetch `state.json` on a timer and post a **local**
+  macOS notification when a rating changes. This tests the full
+  GitHub Action → repo → Mac app chain with no $99 Apple Developer
+  enrollment, no .p8 key and no secrets. Add real APNs push afterwards
+  as a second milestone.
 - `reference-sketch/` in this folder is a rough v1 code draft from an
   earlier design conversation — untested, never run. Treat it as a
   starting point to rewrite or restructure freely, not a spec to follow
