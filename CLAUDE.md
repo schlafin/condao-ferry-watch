@@ -60,24 +60,69 @@ generality or polish.
     asleep longer misses them (fixed by APNs in milestone 2). Open-Meteo's
     marine server has brief outages; requests retry up to 3 times (PR #3),
     and a run that still fails leaves the previous `state.json` in place.
+    That retry window (~1.5 min) wasn't enough on 2026-10-18/19: three
+    scheduled runs in a row failed over ~10 h. Candidate follow-up: longer
+    waits and timeout.
+  - **raw.githubusercontent.com cache bug (found 2026-10-19):** its CDN
+    served a stale *compressed* copy of `state.json` 18 h after a newer
+    commit (despite `max-age=300`), while uncompressed requests were
+    fresh. The app now adds `?t=<unix time>` to every fetch to bypass the
+    cache. Keep that; don't "simplify" it away.
 - **Direction (2026-10-18): go as far as possible on the free tier first.**
   APNs ($99) is deferred until Michael decides he needs alerts while the
   app is closed. Planned free-tier PRs, in order D → A → B → C:
-  - **PR A, real Mac app:** normal window app installed in Applications
-    (Archive → Copy App). A "Show in menu bar" setting (off by default)
-    controls background mode: on = keeps running with a menu-bar icon,
-    checks every 30 min, notifies, and offers Launch at login; off =
-    closing the window quits, and the app updates only while open. Nothing
-    runs invisibly. In open-only mode, mark departures that "changed since
-    you last looked". Clicking a notification opens the window.
-    **Drill-down:** clicking a departure expands it to show every point's
-    score along the path and the biggest contributors (data comes from
-    PR D's per-point detail in `state.json`).
+  - **PR A, real Mac app (in progress on branch `window-app`):** normal
+    window app installed in Applications (Archive → Copy App). Built and
+    tested 2026-10-18: main window, Settings window (⌘,), and a "Show in
+    menu bar" setting (off by default). On = closing the main window keeps
+    the app running as a menu bar extra and offers Launch at login; off =
+    closing the main window quits. Nothing runs invisibly. One copy at a
+    time.
+    **Display redesign (agreed 2026-10-19).** Michael's rule: as little
+    clutter as possible, few words, few numbers; the layout itself should
+    carry the meaning.
+    - **Color = smooth gradient on the score, 0 green → ~1 yellow → 2+ red**
+      (clamped at 2), gray for missing data. Fixed scale on purpose:
+      Michael will learn what each shade feels like on the ferry rather
+      than calibrating thresholds. The GREEN/YELLOW/RED limits no longer
+      drive the display.
+    - Main window rows: a **calendar square** instead of the dot (full
+      weekday name in the top band, large day number, departure time with
+      AM/PM underneath, e.g. "7:30 AM"). Blue body with the number and
+      time in white (blue isn't in the gradient, so every shade stands
+      out); the top band with the weekday takes the worst point's
+      gradient color. Times are always Vietnam time, with no label. Below the route name, a **path bar** running to the row's
+      right edge, a smooth blend of the 7 points' gradient colors.
+      Removed: date/time text, score number, ▸ arrow (the whole row
+      expands it).
+    - Grouping: the Vung Tau → Con Dao departures, a gap, then Con Dao →
+      Vung Tau. No group labels. Title "Upcoming Departures" stays.
+      Removed: the "Forecast run…" line and the ⚠️. The closure note stays,
+      with the refresh time under it.
+    - **Menu bar panel = calendar strip** (replaces the earlier
+      weekday-chip idea): two rows, one per direction, with one column per
+      day, so return dates sit between outbound dates and a trip reads at
+      a glance:
+      ```
+      Vung Tau → Con Dao    20      22      24
+      Con Dao → Vung Tau        21      23
+      ```
+      Day numbers are drawn in their worst-point gradient color as plain
+      text (designed for dark mode). Clicking anywhere opens the main
+      window; a small ✕ at the top right quits the app (same as the old
+      Quit button).
+    - The drill-down stays as is in this PR; Michael will redo its
+      content in a separate PR.
+    - **Notifications:** the backend stops writing rating-change events,
+      but the plumbing stays: the app can still show notifications, and
+      the workflow's `test_event` still works, so a future score-change
+      PR only has to decide when to notify. Menu-bar mode stays; its
+      Settings wording changes to "keeps the menu bar panel current"
+      instead of mentioning notifications.
   - **PR B, desktop widget** (WidgetKit) with a Refresh button and no
     automatic refresh.
   - Optional PR C: Shortcuts/Siri action (App Intents).
-- **PR D, in progress on branch `scoring-v2`** (backend only; the current
-  app ignores the new fields):
+- **PR D, merged (PR #4, 2026-10-18)** (backend only):
   1. **Explicit route-side endpoint cells.** Open-Meteo's marine model is a
      1/12° (~9.2 km) grid, and its default `cell_selection=sea` silently
      moves land requests to the nearest sea cell. Verified 2026-10-18:
@@ -106,6 +151,43 @@ generality or polish.
      6–11 s accordingly; still a heuristic until calibrated (design doc §7).
   5. Design doc: note the ~9 km resolution limit (harbors, bays and Con Dao
      island are invisible to the wave model).
+- **Removed after review (2026-10-19): rating-change notifications.**
+  Notifying when a departure moved between GREEN/YELLOW/RED was judged
+  ineffective: borderline scores flip categories on small variations and
+  fire notifications for meaningless changes.
+- **Removed after review: the "was YELLOW" badge.** A single previous value
+  isn't informative enough.
+- **Future PR: score-change notifications.** Notify when a departure's
+  score changes by more than a meaningful amount (e.g. 0.3) instead of on
+  category flips.
+- **Future PR: forecast deltas over time.** Whether a departure's forecast
+  is getting better or worse across runs matters for trip planning. Needs
+  proper design (history of scores per departure, how to show the trend).
+- **PR E: "soft notification" menu bar icon** (agreed 2026-10-19, after
+  PR A). Only meaningful in menu-bar mode, since the app must be running.
+  - The icon switches from waves to waves-with-"!" when a departure's
+    **worst-point** score is below a threshold (e.g. 0.4) set in the
+    **Settings window**. Stays monochrome per Apple's guidance; at most a
+    one-time pulse when it appears (test first whether symbol animation
+    works in the menu bar at all).
+  - The "!" clears once seen (panel or main window opened), like a read
+    mark, and only returns for a newly qualifying departure.
+  - Direction comes from **your location**: if Vung Tau is the nearer
+    port, it watches Vung Tau → Con Dao; if Con Dao is nearer, Con Dao →
+    Vung Tau. Needs Core Location, the sandbox location entitlement, a
+    usage-description string, and a one-time permission prompt; the
+    coarsest accuracy is enough. Fallback if location is denied: a "Home
+    port" picker in Settings.
+  - Everything stays "worst point" for now; an average-based option may
+    come after real-world testing.
+- **Future PR: light/dark mode color schemes.** Colors are currently
+  designed for dark mode only (Michael's setting); the gradient text
+  colors need a light-mode variant.
+- **Future PR: drill-down redesign** (Michael's own design). Includes the
+  ETA display fix: points currently show the rounded forecast hour (07:30
+  departure → "08:00" for both Start and Point 1); show the actual ETA
+  (07:30, 08:05, 08:40, …) with the forecast hour it used. Needs the
+  backend to publish the real ETA too.
 - **Later idea: encounter period.** Roll resonance depends on the period at
   which waves reach the ship, which at ~32 kn differs a lot from the wave
   period (following seas arrive slower, head seas faster). Parked by

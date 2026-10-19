@@ -9,13 +9,19 @@ import SwiftUI
 
 @main
 struct ConDaoFerryWatchApp: App {
-    @State private var store = FerryStore()
+    // The main window and the open/close/quit behaviour live in AppDelegate.
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @AppStorage(AppSettings.showInMenuBarKey) private var showInMenuBar = false
 
     var body: some Scene {
-        // Menu-bar only (no window, no Dock icon -- see "Application is
-        // agent" in the target's Info tab).
-        MenuBarExtra("Con Dao Ferry Watch", systemImage: "water.waves") {
-            MenuView(store: store)
+        // ConDaoFerryWatch → Settings… (⌘,)
+        Settings {
+            SettingsView()
+        }
+
+        // Only present when "Show in menu bar" is on.
+        MenuBarExtra("Con Dao Ferry Watch", systemImage: "water.waves", isInserted: $showInMenuBar) {
+            MenuBarView(store: .shared)
         }
         .menuBarExtraStyle(.window)
     }
