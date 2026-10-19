@@ -5,9 +5,11 @@ of the 7 waypoints (each at its own ETA hour), classifies it, and writes
 state.json at the repo root. The workflow commits that file back so the
 Mac app can fetch it from raw.githubusercontent.com.
 
-The backend decides what is notification-worthy: rating changes go into
-state.json's "events" list, each with a unique id. The Mac app only posts
-events it hasn't seen before -- it never compares ratings itself.
+state.json's "events" list is the notification channel: the Mac app posts
+each event id it hasn't seen before. Rating-change notifications were
+removed after review (2026-10-19: borderline scores flip categories on
+small variations); for now only --test-event writes one. A future
+score-change rule plugs in here.
 
 Usage:
     python backend/main.py               # normal run
@@ -117,21 +119,6 @@ def in_closure_window(d):
     return d.month >= start or d.month <= end
 
 
-def event_body(dep):
-    when = datetime.fromisoformat(dep["depart"]).strftime("%a %d %b, %H:%M")
-    if dep["rating"] == "NO_DATA":
-        body = f"{when} -- forecast data missing for {dep['missing_points']} of 7 route points"
-    else:
-        body = f"{when} -- score {dep['score']:.2f}"
-    body += f" (was {dep['previous_rating'] or 'unrated'})"
-    if dep["in_closure_window"]:
-        body += (
-            "\n⚠️ Falls within the ferry's typical seasonal closure window -- "
-            f"verify the route is running at {config.ROUTE_STATUS_CHECK_URL} before booking."
-        )
-    return body
-
-
 def main(test_event=False):
     now = datetime.now(TZ)
     generated_at = now.isoformat(timespec="seconds")
@@ -169,18 +156,6 @@ def main(test_event=False):
             "points": points,
         }
         departures.append(dep)
-
-        # Notify on a change. A departure rated for the first time only
-        # counts if it isn't RED or NO_DATA -- otherwise every new day
-        # entering the window in the monsoon season would fire a notification.
-        prev = dep["previous_rating"]
-        if rating != prev and not (prev is None and rating in ("RED", "NO_DATA")):
-            events.append({
-                "id": f"{generated_at}|{dep_id}",
-                "departure_id": dep_id,
-                "title": f"{rating}: {dep['label']}",
-                "body": event_body(dep),
-            })
 
     if test_event:
         events.append({

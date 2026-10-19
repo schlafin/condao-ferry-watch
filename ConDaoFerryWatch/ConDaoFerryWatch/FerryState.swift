@@ -27,14 +27,47 @@ struct Departure: Codable, Identifiable {
     let label: String
     let depart: Date
     let score: Double
-    let rating: String
+    let rating: String          // GREEN, YELLOW, RED or NO_DATA
     let previousRating: String?
+    let worstWaypoint: Int?
     let inClosureWindow: Bool
+    let points: [RoutePoint]?   // optional: older state.json files lack it
 
     enum CodingKeys: String, CodingKey {
-        case id, leg, label, depart, score, rating
+        case id, leg, label, depart, score, rating, points
         case previousRating = "previous_rating"
+        case worstWaypoint = "worst_waypoint"
         case inClosureWindow = "in_closure_window"
+    }
+}
+
+/// One of the 7 forecast points along the route, at the boat's ETA there.
+struct RoutePoint: Codable, Identifiable {
+    let point: Int
+    let eta: String
+    let score: Double?                     // nil = forecast data missing
+    let contributions: [String: Double]?   // swell, wind_waves, secondary_swell, wind
+    let inputs: Inputs?
+    let missing: [String]?
+
+    var id: Int { point }
+
+    struct Inputs: Codable {
+        let swellM: Double
+        let swellPeriodS: Double
+        let swellOffBowDeg: Double
+        let windWaveM: Double
+        let secondarySwellM: Double
+        let windKt: Double
+
+        enum CodingKeys: String, CodingKey {
+            case swellM = "swell_m"
+            case swellPeriodS = "swell_period_s"
+            case swellOffBowDeg = "swell_off_bow_deg"
+            case windWaveM = "wind_wave_m"
+            case secondarySwellM = "secondary_swell_m"
+            case windKt = "wind_kt"
+        }
     }
 }
 

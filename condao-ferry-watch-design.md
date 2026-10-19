@@ -235,6 +235,17 @@ each component's contribution, for the app's drill-down view.
 
 ## 6. Notification design
 
+> **Status (2026-10-19):** APNs is deferred; the app runs on the free
+> tier. What exists today: `state.json` has an `events` list, and the app
+> posts each event id it hasn't seen as a **local** notification while it
+> runs. Rating-change events (the trigger described at the end of this
+> section) were built, then **removed after review**: borderline scores
+> flip categories on small variations and fire meaningless notifications.
+> Only the workflow's `test_event` writes an event now. Possible
+> replacements: a score-change rule (notify when a score moves by more
+> than ~0.3), and a "soft notification" menu bar icon (PR E in
+> CLAUDE.md). The APNs design below stays as reference for later.
+
 **Delivery mechanism:** Apple Push Notification service (APNs), sent
 directly to a native macOS menu-bar app. Chosen over ntfy.sh/Telegram/
 email specifically because Michael decided the $99/year Apple Developer
@@ -276,7 +287,8 @@ only to have registered once. Requirements:
 `APNS_AUTH_KEY` (full .p8 contents), `APNS_DEVICE_TOKEN`,
 `APNS_BUNDLE_ID`.
 
-**Notification trigger logic:** persist a `state.json` of the last-known
+**Notification trigger logic (removed 2026-10-19, see status above):**
+persist a `state.json` of the last-known
 classification per scheduled departure (keyed by leg + departure
 datetime). On each run, only notify when a departure's classification
 *changes* — this avoids re-notifying at every run for conditions that
@@ -326,36 +338,51 @@ pipeline.
 
 ## 9. macOS app
 
-Two responsibilities, not one:
+A normal Mac app, installed in Applications and opened like any other
+(Dock or Spotlight). Built with the free Apple developer tier. All scoring
+lives in the GitHub Actions job; the app only fetches `state.json` and
+displays it. (Mapping a score to a color is display, not scoring.)
 
-1. **Notification registration** — request notification permission once,
-   register for remote notifications, print the device token for the
-   one-time copy into GitHub secrets. (As before.)
-2. **Display current conditions on demand** — the menu-bar dropdown
-   fetches the latest `state.json` from the repo whenever opened (and
-   optionally on a timer while running, e.g. every 15-30 min) and lists
-   upcoming scheduled departures with their color rating, so Michael can
-   check conditions any time without waiting for a notification. This is
-   new versus the original design: since the conditions-engine now always
-   runs regardless of notification status (§2), the app needs its own
-   read path rather than being a passive push receiver only.
+**Repo visibility: done.** Public, so `state.json` is fetched with a plain
+`raw.githubusercontent.com/.../state.json` request and no credentials.
 
-All scoring/business logic still lives entirely in the GitHub Actions
-job — the app only fetches and displays, never computes.
+**Surfaces** (names agreed 2026-10-19):
+- **Main window:** "Upcoming Departures", grouped Vung Tau → Con Dao, a
+  gap, then Con Dao → Vung Tau. Each row has a **calendar square** (full
+  weekday name in a top band colored by the worst point's score; large
+  day number and departure time in white on a blue body) and a **path
+  bar** blending the 7 points' colors from start to end. Clicking a row
+  expands the drill-down (per-point scores and contributors). Footer: the
+  seasonal-closure note and the update time. No score numbers, no extra
+  labels.
+- **Settings window (⌘,):** "Show in menu bar" (off by default) and
+  "Launch at login" (only with the menu bar on).
+- **Menu bar extra** (only when enabled): the waves icon. Its **panel** is
+  a calendar strip, one row per direction and one column per day, with
+  day numbers colored by score. Click anywhere to open the main window;
+  ✕ quits.
+- **Widget:** planned (PR B).
 
-**Repo visibility: done.** Public as of now, so `state.json` can be
-fetched via a plain `raw.githubusercontent.com/.../state.json` request
-with no credentials embedded in the client.
+**Color:** one fixed, smooth gradient on the worst-point score, 0 green →
+1 yellow → 2+ red (gray for missing data), tuned for dark mode for now.
+It's deliberately not calibrated: the user learns what each shade feels
+like on the ferry.
 
-Key implementation notes:
-- `LSUIElement = true` in Info.plist to keep it menu-bar-only (no Dock
-  icon).
-- Entitlements: `com.apple.developer.aps-environment` = `development`
-  (matches sandbox APNs, see §6), `com.apple.security.network.client` =
-  true.
-- If Xcode only offers the SwiftUI app lifecycle, wrap the delegate via
-  `@NSApplicationDelegateAdaptor` rather than fighting for the older
-  AppKit lifecycle template.
+**Modes:** with "Show in menu bar" off, closing the main window quits the
+app, and it updates only while open. With it on, closing the window
+leaves the app running as the menu bar extra (no Dock icon), refreshing
+every 30 minutes; it's never running invisibly. Only one copy runs at a
+time.
+
+Implementation notes:
+- `LSUIElement = NO` ("Application is agent" off); the Dock icon is
+  toggled at runtime with `NSApp.setActivationPolicy`.
+- The main window is an AppKit `NSWindow` owned by `AppDelegate` (wired
+  in via `@NSApplicationDelegateAdaptor`), so its open/close/quit
+  behavior is fully controlled. Settings and the menu bar extra are
+  SwiftUI scenes.
+- Entitlements: App Sandbox with `com.apple.security.network.client`. No
+  push entitlement until APNs.
 
 **iOS: deferred, not designed out.** Michael has decided to build
 macOS-only for now and add iOS later. When that happens, the practical
