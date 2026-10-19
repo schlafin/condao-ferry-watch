@@ -23,8 +23,12 @@ MARINE_VARS = [
 
 WIND_VARS = ["wind_speed_10m", "wind_gusts_10m", "wind_direction_10m"]
 
-# Waits between attempts: try, wait 5s, try, wait 15s, try, then give up.
-RETRY_WAITS = [5, 15]
+# Waits between attempts: try, wait 30s, try, wait 2 min, try, wait 5 min,
+# try, then give up. Open-Meteo's marine server has had outages lasting
+# minutes, so the waits are long enough to ride one out. Worst case for
+# one request is 4 x 30s timeouts + 7.5 min of waiting, about 9.5 min.
+RETRY_WAITS = [30, 120, 300]
+REQUEST_TIMEOUT = 30  # seconds to wait for a response before retrying
 
 
 def _get_hourly(url, params):
@@ -34,7 +38,7 @@ def _get_hourly(url, params):
     state.json is left untouched."""
     for attempt, wait in enumerate(RETRY_WAITS + [None], start=1):
         try:
-            r = requests.get(url, params=params, timeout=20)
+            r = requests.get(url, params=params, timeout=REQUEST_TIMEOUT)
             if r.status_code < 500:
                 r.raise_for_status()  # 4xx is our bug, not worth retrying
                 return r.json()["hourly"]

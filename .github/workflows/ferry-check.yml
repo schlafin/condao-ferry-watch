@@ -21,6 +21,9 @@ concurrency: ferry-check
 jobs:
   check:
     runs-on: ubuntu-latest
+    # Kill a hung run instead of letting it use up to GitHub's 6-hour default.
+    # Retries alone can take ~10 min in the worst case, so 20 leaves room.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
 
