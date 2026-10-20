@@ -60,9 +60,9 @@ generality or polish.
     asleep longer misses them (fixed by APNs in milestone 2). Open-Meteo's
     marine server has brief outages; requests retry up to 3 times (PR #3),
     and a run that still fails leaves the previous `state.json` in place.
-    That retry window (~1.5 min) wasn't enough on 2026-10-18/19: three
-    scheduled runs in a row failed over ~10 h. Candidate follow-up: longer
-    waits and timeout.
+    The original ~1.5 min retry window failed three runs in a row on 2026-10-18/19.
+    Retries were lengthened and the job capped at 20 min in PR #6;
+    whether that's enough is tracked in an issue.
   - **raw.githubusercontent.com cache bug (found 2026-10-19):** its CDN
     served a stale *compressed* copy of `state.json` 18 h after a newer
     commit (despite `max-age=300`), while uncompressed requests were
@@ -70,8 +70,8 @@ generality or polish.
     cache. Keep that; don't "simplify" it away.
 - **Direction (2026-10-18): go as far as possible on the free tier first.**
   APNs ($99) is deferred until Michael decides he needs alerts while the
-  app is closed. Planned free-tier PRs, in order D → A → B → C:
-  - **PR A, real Mac app (in progress on branch `window-app`):** normal
+  app is closed.
+  - **PR A, real Mac app, merged (PR #7, 2026-10-19):** normal
     window app installed in Applications (Archive → Copy App). Built and
     tested 2026-10-18: main window, Settings window (⌘,), and a "Show in
     menu bar" setting (off by default). On = closing the main window keeps
@@ -119,9 +119,6 @@ generality or polish.
       PR only has to decide when to notify. Menu-bar mode stays; its
       Settings wording changes to "keeps the menu bar panel current"
       instead of mentioning notifications.
-  - **PR B, desktop widget** (WidgetKit) with a Refresh button and no
-    automatic refresh.
-  - Optional PR C: Shortcuts/Siri action (App Intents).
 - **PR D, merged (PR #4, 2026-10-18)** (backend only):
   1. **Explicit route-side endpoint cells.** Open-Meteo's marine model is a
      1/12° (~9.2 km) grid, and its default `cell_selection=sea` silently
@@ -157,41 +154,13 @@ generality or polish.
   fire notifications for meaningless changes.
 - **Removed after review: the "was YELLOW" badge.** A single previous value
   isn't informative enough.
-- **Future PR: score-change notifications.** Notify when a departure's
-  score changes by more than a meaningful amount (e.g. 0.3) instead of on
-  category flips.
-- **Future PR: forecast deltas over time.** Whether a departure's forecast
-  is getting better or worse across runs matters for trip planning. Needs
-  proper design (history of scores per departure, how to show the trend).
-- **PR E: "soft notification" menu bar icon** (agreed 2026-10-19, after
-  PR A). Only meaningful in menu-bar mode, since the app must be running.
-  - The icon switches from waves to waves-with-"!" when a departure's
-    **worst-point** score is below a threshold (e.g. 0.4) set in the
-    **Settings window**. Stays monochrome per Apple's guidance; at most a
-    one-time pulse when it appears (test first whether symbol animation
-    works in the menu bar at all).
-  - The "!" clears once seen (panel or main window opened), like a read
-    mark, and only returns for a newly qualifying departure.
-  - Direction comes from **your location**: if Vung Tau is the nearer
-    port, it watches Vung Tau → Con Dao; if Con Dao is nearer, Con Dao →
-    Vung Tau. Needs Core Location, the sandbox location entitlement, a
-    usage-description string, and a one-time permission prompt; the
-    coarsest accuracy is enough. Fallback if location is denied: a "Home
-    port" picker in Settings.
-  - Everything stays "worst point" for now; an average-based option may
-    come after real-world testing.
-- **Future PR: light/dark mode color schemes.** Colors are currently
-  designed for dark mode only (Michael's setting); the gradient text
-  colors need a light-mode variant.
-- **Future PR: drill-down redesign** (Michael's own design). Includes the
-  ETA display fix: points currently show the rounded forecast hour (07:30
-  departure → "08:00" for both Start and Point 1); show the actual ETA
-  (07:30, 08:05, 08:40, …) with the forecast hour it used. Needs the
-  backend to publish the real ETA too.
-- **Later idea: encounter period.** Roll resonance depends on the period at
-  which waves reach the ship, which at ~32 kn differs a lot from the wave
-  period (following seas arrive slower, head seas faster). Parked by
-  Michael on 2026-10-18.
+- **Backlog lives in GitHub Issues** (set up 2026-10-20):
+  https://github.com/schlafin/condao-ferry-watch/issues. Every planned PR,
+  future idea and parked item is an issue there, not in this file. Labels:
+  `bug`, `enhancement`, `idea`, `app`, `backend`, `parked` (needs the $99
+  membership or parked by Michael). Check the issue list before proposing
+  work; a PR that fixes one says "Closes #N". Michael is using the app for a
+  while (from 2026-10-20) and filing feedback as issues for a V2 build.
 - The GitHub CLI login now has the `workflow` scope (needed to push files
   under `.github/workflows/`).
 - The old untested `reference-sketch/` v1 draft was deleted on 2026-10-18,
