@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-14T05:25:48+07:00",
+  "generated_at": "2026-11-14T09:57:19+07:00",
   "schedule_mode": "standard",
   "thresholds": {
     "green_max": 1.0,
@@ -8,11 +8,536 @@
   "missing_values": 0,
   "departures": [
     {
-      "id": "VT_TO_CD_2026-11-14T07:30",
+      "id": "CD_TO_VT_2026-11-15T13:00",
+      "leg": "CD_TO_VT",
+      "label": "Con Dao → Vung Tau",
+      "depart": "2026-11-15T13:00:00+07:00",
+      "score": 1.85,
+      "rating": "RED",
+      "previous_rating": "RED",
+      "worst_waypoint": 2,
+      "missing_points": 0,
+      "in_closure_window": true,
+      "points": [
+        {
+          "point": 0,
+          "lat": 8.7917,
+          "lon": 106.625,
+          "eta": "13:00",
+          "score": 1.29,
+          "contributions": {
+            "swell": 0.54,
+            "wind_waves": 0.378,
+            "secondary_swell": 0.096,
+            "wind": 0.281
+          },
+          "inputs": {
+            "swell_m": 0.42,
+            "swell_period_s": 4.55,
+            "swell_off_bow_deg": 35,
+            "wind_wave_m": 0.54,
+            "secondary_swell_m": 0.12,
+            "wind_kt": 14.0
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.285
+        },
+        {
+          "point": 1,
+          "lat": 8.9706,
+          "lon": 106.6822,
+          "eta": "14:00",
+          "score": 1.64,
+          "contributions": {
+            "swell": 0.996,
+            "wind_waves": 0.406,
+            "secondary_swell": 0.016,
+            "wind": 0.222
+          },
+          "inputs": {
+            "swell_m": 0.74,
+            "swell_period_s": 4.45,
+            "swell_off_bow_deg": 44,
+            "wind_wave_m": 0.58,
+            "secondary_swell_m": 0.02,
+            "wind_kt": 11.1
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.346
+        },
+        {
+          "point": 2,
+          "lat": 9.2437,
+          "lon": 106.7628,
+          "eta": "14:00",
+          "score": 1.85,
+          "contributions": {
+            "swell": 1.179,
+            "wind_waves": 0.434,
+            "secondary_swell": 0.016,
+            "wind": 0.218
+          },
+          "inputs": {
+            "swell_m": 0.84,
+            "swell_period_s": 4.5,
+            "swell_off_bow_deg": 54,
+            "wind_wave_m": 0.62,
+            "secondary_swell_m": 0.02,
+            "wind_kt": 10.9
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.404
+        },
+        {
+          "point": 3,
+          "lat": 9.5168,
+          "lon": 106.8433,
+          "eta": "15:00",
+          "score": 1.66,
+          "contributions": {
+            "swell": 1.178,
+            "wind_waves": 0.252,
+            "secondary_swell": 0.0,
+            "wind": 0.231
+          },
+          "inputs": {
+            "swell_m": 0.82,
+            "swell_period_s": 4.25,
+            "swell_off_bow_deg": 61,
+            "wind_wave_m": 0.36,
+            "secondary_swell_m": 0.0,
+            "wind_kt": 11.6
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.437
+        },
+        {
+          "point": 4,
+          "lat": 9.7898,
+          "lon": 106.9239,
+          "eta": "15:00",
+          "score": 1.33,
+          "contributions": {
+            "swell": 1.085,
+            "wind_waves": 0.084,
+            "secondary_swell": 0.0,
+            "wind": 0.163
+          },
+          "inputs": {
+            "swell_m": 0.74,
+            "swell_period_s": 3.95,
+            "swell_off_bow_deg": 69,
+            "wind_wave_m": 0.12,
+            "secondary_swell_m": 0.0,
+            "wind_kt": 8.2
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.466
+        },
+        {
+          "point": 5,
+          "lat": 10.0629,
+          "lon": 107.0044,
+          "eta": "16:00",
+          "score": 1.17,
+          "contributions": {
+            "swell": 0.916,
+            "wind_waves": 0.07,
+            "secondary_swell": 0.0,
+            "wind": 0.185
+          },
+          "inputs": {
+            "swell_m": 0.62,
+            "swell_period_s": 3.9,
+            "swell_off_bow_deg": 73,
+            "wind_wave_m": 0.1,
+            "secondary_swell_m": 0.0,
+            "wind_kt": 9.2
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.478
+        },
+        {
+          "point": 6,
+          "lat": 10.2917,
+          "lon": 107.0417,
+          "eta": "17:00",
+          "score": 0.87,
+          "contributions": {
+            "swell": 0.57,
+            "wind_waves": 0.098,
+            "secondary_swell": 0.0,
+            "wind": 0.203
+          },
+          "inputs": {
+            "swell_m": 0.38,
+            "swell_period_s": 3.75,
+            "swell_off_bow_deg": 88,
+            "wind_wave_m": 0.14,
+            "secondary_swell_m": 0.0,
+            "wind_kt": 10.2
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.5
+        }
+      ]
+    },
+    {
+      "id": "VT_TO_CD_2026-11-17T07:30",
       "leg": "VT_TO_CD",
       "label": "Vung Tau → Con Dao",
-      "depart": "2026-11-14T07:30:00+07:00",
-      "score": 1.67,
+      "depart": "2026-11-17T07:30:00+07:00",
+      "score": 1.65,
+      "rating": "RED",
+      "previous_rating": "YELLOW",
+      "worst_waypoint": 3,
+      "missing_points": 0,
+      "in_closure_window": true,
+      "points": [
+        {
+          "point": 0,
+          "lat": 10.2917,
+          "lon": 107.0417,
+          "eta": "08:00",
+          "score": 1.22,
+          "contributions": {
+            "swell": 0.57,
+            "wind_waves": 0.378,
+            "secondary_swell": 0.08,
+            "wind": 0.194
+          },
+          "inputs": {
+            "swell_m": 0.38,
+            "swell_period_s": 3.9,
+            "swell_off_bow_deg": 90,
+            "wind_wave_m": 0.54,
+            "secondary_swell_m": 0.1,
+            "wind_kt": 9.7
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.5
+        },
+        {
+          "point": 1,
+          "lat": 10.0629,
+          "lon": 107.0044,
+          "eta": "08:00",
+          "score": 1.38,
+          "contributions": {
+            "swell": 0.39,
+            "wind_waves": 0.56,
+            "secondary_swell": 0.128,
+            "wind": 0.298
+          },
+          "inputs": {
+            "swell_m": 0.26,
+            "swell_period_s": 4.6,
+            "swell_off_bow_deg": 90,
+            "wind_wave_m": 0.8,
+            "secondary_swell_m": 0.16,
+            "wind_kt": 14.9
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.5
+        },
+        {
+          "point": 2,
+          "lat": 9.7898,
+          "lon": 106.9239,
+          "eta": "09:00",
+          "score": 1.48,
+          "contributions": {
+            "swell": 0.509,
+            "wind_waves": 0.518,
+            "secondary_swell": 0.16,
+            "wind": 0.294
+          },
+          "inputs": {
+            "swell_m": 0.34,
+            "swell_period_s": 4.4,
+            "swell_off_bow_deg": 84,
+            "wind_wave_m": 0.74,
+            "secondary_swell_m": 0.2,
+            "wind_kt": 14.7
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.497
+        },
+        {
+          "point": 3,
+          "lat": 9.5168,
+          "lon": 106.8433,
+          "eta": "09:00",
+          "score": 1.65,
+          "contributions": {
+            "swell": 0.803,
+            "wind_waves": 0.434,
+            "secondary_swell": 0.144,
+            "wind": 0.268
+          },
+          "inputs": {
+            "swell_m": 0.54,
+            "swell_period_s": 4.05,
+            "swell_off_bow_deg": 77,
+            "wind_wave_m": 0.62,
+            "secondary_swell_m": 0.18,
+            "wind_kt": 13.4
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.487
+        },
+        {
+          "point": 4,
+          "lat": 9.2437,
+          "lon": 106.7628,
+          "eta": "10:00",
+          "score": 1.59,
+          "contributions": {
+            "swell": 0.919,
+            "wind_waves": 0.378,
+            "secondary_swell": 0.032,
+            "wind": 0.259
+          },
+          "inputs": {
+            "swell_m": 0.66,
+            "swell_period_s": 4.15,
+            "swell_off_bow_deg": 52,
+            "wind_wave_m": 0.54,
+            "secondary_swell_m": 0.04,
+            "wind_kt": 13.0
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.393
+        },
+        {
+          "point": 5,
+          "lat": 8.9706,
+          "lon": 106.6822,
+          "eta": "10:00",
+          "score": 1.38,
+          "contributions": {
+            "swell": 0.777,
+            "wind_waves": 0.294,
+            "secondary_swell": 0.064,
+            "wind": 0.249
+          },
+          "inputs": {
+            "swell_m": 0.58,
+            "swell_period_s": 4.0,
+            "swell_off_bow_deg": 43,
+            "wind_wave_m": 0.42,
+            "secondary_swell_m": 0.08,
+            "wind_kt": 12.5
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.339
+        },
+        {
+          "point": 6,
+          "lat": 8.7917,
+          "lon": 106.625,
+          "eta": "11:00",
+          "score": 1.06,
+          "contributions": {
+            "swell": 0.429,
+            "wind_waves": 0.28,
+            "secondary_swell": 0.096,
+            "wind": 0.252
+          },
+          "inputs": {
+            "swell_m": 0.34,
+            "swell_period_s": 3.9,
+            "swell_off_bow_deg": 32,
+            "wind_wave_m": 0.4,
+            "secondary_swell_m": 0.12,
+            "wind_kt": 12.6
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.263
+        }
+      ]
+    },
+    {
+      "id": "CD_TO_VT_2026-11-18T13:00",
+      "leg": "CD_TO_VT",
+      "label": "Con Dao → Vung Tau",
+      "depart": "2026-11-18T13:00:00+07:00",
+      "score": 1.83,
+      "rating": "RED",
+      "previous_rating": "RED",
+      "worst_waypoint": 3,
+      "missing_points": 0,
+      "in_closure_window": true,
+      "points": [
+        {
+          "point": 0,
+          "lat": 8.7917,
+          "lon": 106.625,
+          "eta": "13:00",
+          "score": 1.1,
+          "contributions": {
+            "swell": 0.143,
+            "wind_waves": 0.602,
+            "secondary_swell": 0.096,
+            "wind": 0.256
+          },
+          "inputs": {
+            "swell_m": 0.14,
+            "swell_period_s": 4.6,
+            "swell_off_bow_deg": 3,
+            "wind_wave_m": 0.86,
+            "secondary_swell_m": 0.12,
+            "wind_kt": 12.8
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.025
+        },
+        {
+          "point": 1,
+          "lat": 8.9706,
+          "lon": 106.6822,
+          "eta": "14:00",
+          "score": 1.53,
+          "contributions": {
+            "swell": 0.541,
+            "wind_waves": 0.63,
+            "secondary_swell": 0.096,
+            "wind": 0.259
+          },
+          "inputs": {
+            "swell_m": 0.48,
+            "swell_period_s": 4.05,
+            "swell_off_bow_deg": 15,
+            "wind_wave_m": 0.9,
+            "secondary_swell_m": 0.12,
+            "wind_kt": 13.0
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.128
+        },
+        {
+          "point": 2,
+          "lat": 9.2437,
+          "lon": 106.7628,
+          "eta": "14:00",
+          "score": 1.82,
+          "contributions": {
+            "swell": 0.767,
+            "wind_waves": 0.574,
+            "secondary_swell": 0.176,
+            "wind": 0.299
+          },
+          "inputs": {
+            "swell_m": 0.6,
+            "swell_period_s": 4.6,
+            "swell_off_bow_deg": 34,
+            "wind_wave_m": 0.82,
+            "secondary_swell_m": 0.22,
+            "wind_kt": 15.0
+          },
+          "resonance_x": 1.0,
+          "beam_x": 1.278
+        },
+        {
+          "point": 3,
+          "lat": 9.5168,
+          "lon": 106.8433,
+          "eta": "15:00",
+          "score": 1.83,
+          "contributions": {
+            "swell": 0.724,
+            "wind_waves": 0.644,
+            "secondary_swell": 0.176,
+            "wind": 0.284
+          },
+          "inputs": {
+            "swell_m": 0.38,
+            "swell_period_s": 5.3,
+            "swell_off_bow_deg": 69,
+            "wind_wave_m": 0.92,
+            "secondary_swell_m": 0.22,
+            "wind_kt": 14.2
+          },
+          "resonance_x": 1.3,
+          "beam_x": 1.466
+        },
+        {
+          "point": 4,
+          "lat": 9.7898,
+          "lon": 106.9239,
+          "eta": "15:00",
+          "score": 1.62,
+          "contributions": {
+            "swell": 0.572,
+            "wind_waves": 0.644,
+            "secondary_swell": 0.128,
+            "wind": 0.275
+          },
+          "inputs": {
+            "swell_m": 0.3,
+            "swell_period_s": 5.3,
+            "swell_off_bow_deg": 69,
+            "wind_wave_m": 0.92,
+            "secondary_swell_m": 0.16,
+            "wind_kt": 13.8
+          },
+          "resonance_x": 1.3,
+          "beam_x": 1.466
+        },
+        {
+          "point": 5,
+          "lat": 10.0629,
+          "lon": 107.0044,
+          "eta": "16:00",
+          "score": 1.51,
+          "contributions": {
+            "swell": 0.426,
+            "wind_waves": 0.63,
+            "secondary_swell": 0.16,
+            "wind": 0.289
+          },
+          "inputs": {
+            "swell_m": 0.22,
+            "swell_period_s": 5.35,
+            "swell_off_bow_deg": 79,
+            "wind_wave_m": 0.9,
+            "secondary_swell_m": 0.2,
+            "wind_kt": 14.5
+          },
+          "resonance_x": 1.3,
+          "beam_x": 1.491
+        },
+        {
+          "point": 6,
+          "lat": 10.2917,
+          "lon": 107.0417,
+          "eta": "17:00",
+          "score": 1.09,
+          "contributions": {
+            "swell": 0.23,
+            "wind_waves": 0.546,
+            "secondary_swell": 0.064,
+            "wind": 0.253
+          },
+          "inputs": {
+            "swell_m": 0.12,
+            "swell_period_s": 5.25,
+            "swell_off_bow_deg": 72,
+            "wind_wave_m": 0.78,
+            "secondary_swell_m": 0.08,
+            "wind_kt": 12.6
+          },
+          "resonance_x": 1.3,
+          "beam_x": 1.475
+        }
+      ]
+    },
+    {
+      "id": "VT_TO_CD_2026-11-19T07:30",
+      "leg": "VT_TO_CD",
+      "label": "Vung Tau → Con Dao",
+      "depart": "2026-11-19T07:30:00+07:00",
+      "score": 2.85,
       "rating": "RED",
       "previous_rating": "RED",
       "worst_waypoint": 4,
@@ -24,743 +549,43 @@
           "lat": 10.2917,
           "lon": 107.0417,
           "eta": "08:00",
-          "score": 0.73,
+          "score": 1.36,
           "contributions": {
-            "swell": 0.6,
-            "wind_waves": 0.028,
+            "swell": 0.74,
+            "wind_waves": 0.364,
             "secondary_swell": 0.064,
-            "wind": 0.041
-          },
-          "inputs": {
-            "swell_m": 0.4,
-            "swell_period_s": 3.1,
-            "swell_off_bow_deg": 87,
-            "wind_wave_m": 0.04,
-            "secondary_swell_m": 0.08,
-            "wind_kt": 2.1
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.499
-        },
-        {
-          "point": 1,
-          "lat": 10.0629,
-          "lon": 107.0044,
-          "eta": "08:00",
-          "score": 1.31,
-          "contributions": {
-            "swell": 0.831,
-            "wind_waves": 0.252,
-            "secondary_swell": 0.112,
-            "wind": 0.111
-          },
-          "inputs": {
-            "swell_m": 0.56,
-            "swell_period_s": 3.55,
-            "swell_off_bow_deg": 76,
-            "wind_wave_m": 0.36,
-            "secondary_swell_m": 0.14,
-            "wind_kt": 5.6
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.485
-        },
-        {
-          "point": 2,
-          "lat": 9.7898,
-          "lon": 106.9239,
-          "eta": "09:00",
-          "score": 1.45,
-          "contributions": {
-            "swell": 0.826,
-            "wind_waves": 0.252,
-            "secondary_swell": 0.176,
-            "wind": 0.198
-          },
-          "inputs": {
-            "swell_m": 0.56,
-            "swell_period_s": 3.55,
-            "swell_off_bow_deg": 72,
-            "wind_wave_m": 0.36,
-            "secondary_swell_m": 0.22,
-            "wind_kt": 9.9
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.475
-        },
-        {
-          "point": 3,
-          "lat": 9.5168,
-          "lon": 106.8433,
-          "eta": "09:00",
-          "score": 1.55,
-          "contributions": {
-            "swell": 0.934,
-            "wind_waves": 0.196,
-            "secondary_swell": 0.256,
-            "wind": 0.165
-          },
-          "inputs": {
-            "swell_m": 0.64,
-            "swell_period_s": 3.45,
-            "swell_off_bow_deg": 67,
-            "wind_wave_m": 0.28,
-            "secondary_swell_m": 0.32,
-            "wind_kt": 8.3
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.459
-        },
-        {
-          "point": 4,
-          "lat": 9.2437,
-          "lon": 106.7628,
-          "eta": "10:00",
-          "score": 1.67,
-          "contributions": {
-            "swell": 0.945,
-            "wind_waves": 0.238,
-            "secondary_swell": 0.288,
-            "wind": 0.195
-          },
-          "inputs": {
-            "swell_m": 0.66,
-            "swell_period_s": 3.7,
-            "swell_off_bow_deg": 60,
-            "wind_wave_m": 0.34,
-            "secondary_swell_m": 0.36,
-            "wind_kt": 9.8
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.432
-        },
-        {
-          "point": 5,
-          "lat": 8.9706,
-          "lon": 106.6822,
-          "eta": "10:00",
-          "score": 1.62,
-          "contributions": {
-            "swell": 0.891,
-            "wind_waves": 0.21,
-            "secondary_swell": 0.256,
-            "wind": 0.258
-          },
-          "inputs": {
-            "swell_m": 0.64,
-            "swell_period_s": 3.6,
-            "swell_off_bow_deg": 52,
-            "wind_wave_m": 0.3,
-            "secondary_swell_m": 0.32,
-            "wind_kt": 12.9
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.393
-        },
-        {
-          "point": 6,
-          "lat": 8.7917,
-          "lon": 106.625,
-          "eta": "11:00",
-          "score": 1.12,
-          "contributions": {
-            "swell": 0.521,
-            "wind_waves": 0.224,
-            "secondary_swell": 0.112,
-            "wind": 0.26
-          },
-          "inputs": {
-            "swell_m": 0.38,
-            "swell_period_s": 3.95,
-            "swell_off_bow_deg": 48,
-            "wind_wave_m": 0.32,
-            "secondary_swell_m": 0.14,
-            "wind_kt": 13.0
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.37
-        }
-      ]
-    },
-    {
-      "id": "CD_TO_VT_2026-11-15T13:00",
-      "leg": "CD_TO_VT",
-      "label": "Con Dao → Vung Tau",
-      "depart": "2026-11-15T13:00:00+07:00",
-      "score": 1.7,
-      "rating": "RED",
-      "previous_rating": "RED",
-      "worst_waypoint": 2,
-      "missing_points": 0,
-      "in_closure_window": true,
-      "points": [
-        {
-          "point": 0,
-          "lat": 8.7917,
-          "lon": 106.625,
-          "eta": "13:00",
-          "score": 1.22,
-          "contributions": {
-            "swell": 0.706,
-            "wind_waves": 0.252,
-            "secondary_swell": 0.0,
-            "wind": 0.261
-          },
-          "inputs": {
-            "swell_m": 0.54,
-            "swell_period_s": 3.75,
-            "swell_off_bow_deg": 38,
-            "wind_wave_m": 0.36,
-            "secondary_swell_m": 0.0,
-            "wind_kt": 13.1
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.307
-        },
-        {
-          "point": 1,
-          "lat": 8.9706,
-          "lon": 106.6822,
-          "eta": "14:00",
-          "score": 1.56,
-          "contributions": {
-            "swell": 1.082,
-            "wind_waves": 0.21,
-            "secondary_swell": 0.0,
-            "wind": 0.263
-          },
-          "inputs": {
-            "swell_m": 0.8,
-            "swell_period_s": 3.95,
-            "swell_off_bow_deg": 45,
-            "wind_wave_m": 0.3,
-            "secondary_swell_m": 0.0,
-            "wind_kt": 13.2
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.352
-        },
-        {
-          "point": 2,
-          "lat": 9.2437,
-          "lon": 106.7628,
-          "eta": "14:00",
-          "score": 1.7,
-          "contributions": {
-            "swell": 1.231,
-            "wind_waves": 0.21,
-            "secondary_swell": 0.0,
-            "wind": 0.257
-          },
-          "inputs": {
-            "swell_m": 0.88,
-            "swell_period_s": 4.15,
-            "swell_off_bow_deg": 53,
-            "wind_wave_m": 0.3,
-            "secondary_swell_m": 0.0,
-            "wind_kt": 12.9
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.398
-        },
-        {
-          "point": 3,
-          "lat": 9.5168,
-          "lon": 106.8433,
-          "eta": "15:00",
-          "score": 1.53,
-          "contributions": {
-            "swell": 1.124,
-            "wind_waves": 0.14,
-            "secondary_swell": 0.064,
-            "wind": 0.199
-          },
-          "inputs": {
-            "swell_m": 0.78,
-            "swell_period_s": 4.2,
-            "swell_off_bow_deg": 62,
-            "wind_wave_m": 0.2,
-            "secondary_swell_m": 0.08,
-            "wind_kt": 9.9
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.441
-        },
-        {
-          "point": 4,
-          "lat": 9.7898,
-          "lon": 106.9239,
-          "eta": "15:00",
-          "score": 1.3,
-          "contributions": {
-            "swell": 1.056,
-            "wind_waves": 0.126,
-            "secondary_swell": 0.0,
-            "wind": 0.121
-          },
-          "inputs": {
-            "swell_m": 0.72,
-            "swell_period_s": 4.05,
-            "swell_off_bow_deg": 69,
-            "wind_wave_m": 0.18,
-            "secondary_swell_m": 0.0,
-            "wind_kt": 6.0
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.466
-        },
-        {
-          "point": 5,
-          "lat": 10.0629,
-          "lon": 107.0044,
-          "eta": "16:00",
-          "score": 1.19,
-          "contributions": {
-            "swell": 0.856,
-            "wind_waves": 0.196,
-            "secondary_swell": 0.0,
-            "wind": 0.136
-          },
-          "inputs": {
-            "swell_m": 0.58,
-            "swell_period_s": 4.1,
-            "swell_off_bow_deg": 72,
-            "wind_wave_m": 0.28,
-            "secondary_swell_m": 0.0,
-            "wind_kt": 6.8
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.475
-        },
-        {
-          "point": 6,
-          "lat": 10.2917,
-          "lon": 107.0417,
-          "eta": "17:00",
-          "score": 0.92,
-          "contributions": {
-            "swell": 0.509,
-            "wind_waves": 0.21,
-            "secondary_swell": 0.048,
-            "wind": 0.149
-          },
-          "inputs": {
-            "swell_m": 0.34,
-            "swell_period_s": 4.15,
-            "swell_off_bow_deg": 84,
-            "wind_wave_m": 0.3,
-            "secondary_swell_m": 0.06,
-            "wind_kt": 7.5
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.497
-        }
-      ]
-    },
-    {
-      "id": "VT_TO_CD_2026-11-17T07:30",
-      "leg": "VT_TO_CD",
-      "label": "Vung Tau → Con Dao",
-      "depart": "2026-11-17T07:30:00+07:00",
-      "score": 1.56,
-      "rating": "YELLOW",
-      "previous_rating": "YELLOW",
-      "worst_waypoint": 2,
-      "missing_points": 0,
-      "in_closure_window": true,
-      "points": [
-        {
-          "point": 0,
-          "lat": 10.2917,
-          "lon": 107.0417,
-          "eta": "08:00",
-          "score": 1.08,
-          "contributions": {
-            "swell": 0.6,
-            "wind_waves": 0.266,
-            "secondary_swell": 0.032,
-            "wind": 0.185
-          },
-          "inputs": {
-            "swell_m": 0.4,
-            "swell_period_s": 3.45,
-            "swell_off_bow_deg": 89,
-            "wind_wave_m": 0.38,
-            "secondary_swell_m": 0.04,
-            "wind_kt": 9.2
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.5
-        },
-        {
-          "point": 1,
-          "lat": 10.0629,
-          "lon": 107.0044,
-          "eta": "08:00",
-          "score": 1.54,
-          "contributions": {
-            "swell": 0.69,
-            "wind_waves": 0.434,
-            "secondary_swell": 0.112,
-            "wind": 0.3
-          },
-          "inputs": {
-            "swell_m": 0.46,
-            "swell_period_s": 3.75,
-            "swell_off_bow_deg": 89,
-            "wind_wave_m": 0.62,
-            "secondary_swell_m": 0.14,
-            "wind_kt": 15.0
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.5
-        },
-        {
-          "point": 2,
-          "lat": 9.7898,
-          "lon": 106.9239,
-          "eta": "09:00",
-          "score": 1.56,
-          "contributions": {
-            "swell": 0.803,
-            "wind_waves": 0.378,
-            "secondary_swell": 0.08,
-            "wind": 0.3
-          },
-          "inputs": {
-            "swell_m": 0.54,
-            "swell_period_s": 4.0,
-            "swell_off_bow_deg": 77,
-            "wind_wave_m": 0.54,
-            "secondary_swell_m": 0.1,
-            "wind_kt": 15.0
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.487
-        },
-        {
-          "point": 3,
-          "lat": 9.5168,
-          "lon": 106.8433,
-          "eta": "09:00",
-          "score": 1.53,
-          "contributions": {
-            "swell": 0.819,
-            "wind_waves": 0.35,
-            "secondary_swell": 0.096,
-            "wind": 0.263
-          },
-          "inputs": {
-            "swell_m": 0.56,
-            "swell_period_s": 4.1,
-            "swell_off_bow_deg": 68,
-            "wind_wave_m": 0.5,
-            "secondary_swell_m": 0.12,
-            "wind_kt": 13.2
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.463
-        },
-        {
-          "point": 4,
-          "lat": 9.2437,
-          "lon": 106.7628,
-          "eta": "10:00",
-          "score": 1.5,
-          "contributions": {
-            "swell": 0.882,
-            "wind_waves": 0.28,
-            "secondary_swell": 0.064,
-            "wind": 0.271
-          },
-          "inputs": {
-            "swell_m": 0.62,
-            "swell_period_s": 3.95,
-            "swell_off_bow_deg": 58,
-            "wind_wave_m": 0.4,
-            "secondary_swell_m": 0.08,
-            "wind_kt": 13.6
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.423
-        },
-        {
-          "point": 5,
-          "lat": 8.9706,
-          "lon": 106.6822,
-          "eta": "10:00",
-          "score": 1.29,
-          "contributions": {
-            "swell": 0.689,
-            "wind_waves": 0.308,
-            "secondary_swell": 0.064,
-            "wind": 0.225
-          },
-          "inputs": {
-            "swell_m": 0.48,
-            "swell_period_s": 4.05,
-            "swell_off_bow_deg": 61,
-            "wind_wave_m": 0.44,
-            "secondary_swell_m": 0.08,
-            "wind_kt": 11.2
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.436
-        },
-        {
-          "point": 6,
-          "lat": 8.7917,
-          "lon": 106.625,
-          "eta": "11:00",
-          "score": 0.97,
-          "contributions": {
-            "swell": 0.35,
-            "wind_waves": 0.266,
-            "secondary_swell": 0.08,
-            "wind": 0.276
-          },
-          "inputs": {
-            "swell_m": 0.26,
-            "swell_period_s": 4.2,
-            "swell_off_bow_deg": 44,
-            "wind_wave_m": 0.38,
-            "secondary_swell_m": 0.1,
-            "wind_kt": 13.8
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.346
-        }
-      ]
-    },
-    {
-      "id": "CD_TO_VT_2026-11-18T13:00",
-      "leg": "CD_TO_VT",
-      "label": "Con Dao → Vung Tau",
-      "depart": "2026-11-18T13:00:00+07:00",
-      "score": 2.05,
-      "rating": "RED",
-      "previous_rating": "RED",
-      "worst_waypoint": 2,
-      "missing_points": 0,
-      "in_closure_window": true,
-      "points": [
-        {
-          "point": 0,
-          "lat": 8.7917,
-          "lon": 106.625,
-          "eta": "13:00",
-          "score": 1.44,
-          "contributions": {
-            "swell": 0.571,
-            "wind_waves": 0.42,
-            "secondary_swell": 0.064,
-            "wind": 0.388
-          },
-          "inputs": {
-            "swell_m": 0.46,
-            "swell_period_s": 4.3,
-            "swell_off_bow_deg": 29,
-            "wind_wave_m": 0.6,
-            "secondary_swell_m": 0.08,
-            "wind_kt": 19.4
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.241
-        },
-        {
-          "point": 1,
-          "lat": 8.9706,
-          "lon": 106.6822,
-          "eta": "14:00",
-          "score": 1.79,
-          "contributions": {
-            "swell": 0.874,
-            "wind_waves": 0.476,
-            "secondary_swell": 0.112,
-            "wind": 0.332
-          },
-          "inputs": {
-            "swell_m": 0.68,
-            "swell_period_s": 4.65,
-            "swell_off_bow_deg": 35,
-            "wind_wave_m": 0.68,
-            "secondary_swell_m": 0.14,
-            "wind_kt": 16.6
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.285
-        },
-        {
-          "point": 2,
-          "lat": 9.2437,
-          "lon": 106.7628,
-          "eta": "14:00",
-          "score": 2.05,
-          "contributions": {
-            "swell": 1.114,
-            "wind_waves": 0.532,
-            "secondary_swell": 0.128,
-            "wind": 0.275
-          },
-          "inputs": {
-            "swell_m": 0.62,
-            "swell_period_s": 5.05,
-            "swell_off_bow_deg": 50,
-            "wind_wave_m": 0.76,
-            "secondary_swell_m": 0.16,
-            "wind_kt": 13.8
-          },
-          "resonance_x": 1.3,
-          "beam_x": 1.382
-        },
-        {
-          "point": 3,
-          "lat": 9.5168,
-          "lon": 106.8433,
-          "eta": "15:00",
-          "score": 2.01,
-          "contributions": {
-            "swell": 1.142,
-            "wind_waves": 0.448,
-            "secondary_swell": 0.112,
-            "wind": 0.31
-          },
-          "inputs": {
-            "swell_m": 0.8,
-            "swell_period_s": 4.6,
-            "swell_off_bow_deg": 59,
-            "wind_wave_m": 0.64,
-            "secondary_swell_m": 0.14,
-            "wind_kt": 15.5
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.428
-        },
-        {
-          "point": 4,
-          "lat": 9.7898,
-          "lon": 106.9239,
-          "eta": "15:00",
-          "score": 1.95,
-          "contributions": {
-            "swell": 1.133,
-            "wind_waves": 0.49,
-            "secondary_swell": 0.032,
-            "wind": 0.297
-          },
-          "inputs": {
-            "swell_m": 0.78,
-            "swell_period_s": 4.4,
-            "swell_off_bow_deg": 65,
-            "wind_wave_m": 0.7,
-            "secondary_swell_m": 0.04,
-            "wind_kt": 14.8
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.452
-        },
-        {
-          "point": 5,
-          "lat": 10.0629,
-          "lon": 107.0044,
-          "eta": "16:00",
-          "score": 1.83,
-          "contributions": {
-            "swell": 0.731,
-            "wind_waves": 0.504,
-            "secondary_swell": 0.304,
-            "wind": 0.294
+            "wind": 0.192
           },
           "inputs": {
             "swell_m": 0.5,
-            "swell_period_s": 4.95,
-            "swell_off_bow_deg": 68,
-            "wind_wave_m": 0.72,
-            "secondary_swell_m": 0.38,
-            "wind_kt": 14.7
+            "swell_period_s": 4.55,
+            "swell_off_bow_deg": 74,
+            "wind_wave_m": 0.52,
+            "secondary_swell_m": 0.08,
+            "wind_kt": 9.6
           },
           "resonance_x": 1.0,
-          "beam_x": 1.463
-        },
-        {
-          "point": 6,
-          "lat": 10.2917,
-          "lon": 107.0417,
-          "eta": "17:00",
-          "score": 1.18,
-          "contributions": {
-            "swell": 0.318,
-            "wind_waves": 0.504,
-            "secondary_swell": 0.096,
-            "wind": 0.261
-          },
-          "inputs": {
-            "swell_m": 0.22,
-            "swell_period_s": 4.75,
-            "swell_off_bow_deg": 63,
-            "wind_wave_m": 0.72,
-            "secondary_swell_m": 0.12,
-            "wind_kt": 13.1
-          },
-          "resonance_x": 1.0,
-          "beam_x": 1.445
-        }
-      ]
-    },
-    {
-      "id": "VT_TO_CD_2026-11-19T07:30",
-      "leg": "VT_TO_CD",
-      "label": "Vung Tau → Con Dao",
-      "depart": "2026-11-19T07:30:00+07:00",
-      "score": 2.28,
-      "rating": "RED",
-      "previous_rating": "RED",
-      "worst_waypoint": 3,
-      "missing_points": 0,
-      "in_closure_window": true,
-      "points": [
-        {
-          "point": 0,
-          "lat": 10.2917,
-          "lon": 107.0417,
-          "eta": "08:00",
-          "score": 1.57,
-          "contributions": {
-            "swell": 0.811,
-            "wind_waves": 0.532,
-            "secondary_swell": 0.08,
-            "wind": 0.15
-          },
-          "inputs": {
-            "swell_m": 0.42,
-            "swell_period_s": 5.1,
-            "swell_off_bow_deg": 76,
-            "wind_wave_m": 0.76,
-            "secondary_swell_m": 0.1,
-            "wind_kt": 7.5
-          },
-          "resonance_x": 1.3,
-          "beam_x": 1.485
+          "beam_x": 1.48
         },
         {
           "point": 1,
           "lat": 10.0629,
           "lon": 107.0044,
           "eta": "08:00",
-          "score": 2.09,
+          "score": 2.11,
           "contributions": {
-            "swell": 0.661,
-            "wind_waves": 0.896,
-            "secondary_swell": 0.176,
-            "wind": 0.352
+            "swell": 0.817,
+            "wind_waves": 0.826,
+            "secondary_swell": 0.144,
+            "wind": 0.324
           },
           "inputs": {
-            "swell_m": 0.34,
-            "swell_period_s": 5.9,
+            "swell_m": 0.42,
+            "swell_period_s": 5.75,
             "swell_off_bow_deg": 83,
-            "wind_wave_m": 1.28,
-            "secondary_swell_m": 0.22,
-            "wind_kt": 17.6
+            "wind_wave_m": 1.18,
+            "secondary_swell_m": 0.18,
+            "wind_kt": 16.2
           },
           "resonance_x": 1.3,
           "beam_x": 1.496
@@ -770,115 +595,115 @@
           "lat": 9.7898,
           "lon": 106.9239,
           "eta": "09:00",
-          "score": 2.23,
+          "score": 2.49,
           "contributions": {
-            "swell": 0.817,
-            "wind_waves": 0.938,
+            "swell": 1.237,
+            "wind_waves": 0.784,
             "secondary_swell": 0.128,
-            "wind": 0.349
+            "wind": 0.339
           },
           "inputs": {
-            "swell_m": 0.42,
-            "swell_period_s": 5.8,
-            "swell_off_bow_deg": 84,
-            "wind_wave_m": 1.34,
+            "swell_m": 0.64,
+            "swell_period_s": 5.4,
+            "swell_off_bow_deg": 77,
+            "wind_wave_m": 1.12,
             "secondary_swell_m": 0.16,
-            "wind_kt": 17.4
+            "wind_kt": 17.0
           },
           "resonance_x": 1.3,
-          "beam_x": 1.497
+          "beam_x": 1.487
         },
         {
           "point": 3,
           "lat": 9.5168,
           "lon": 106.8433,
           "eta": "09:00",
-          "score": 2.28,
+          "score": 2.77,
           "contributions": {
-            "swell": 0.811,
-            "wind_waves": 0.994,
-            "secondary_swell": 0.176,
-            "wind": 0.303
+            "swell": 1.578,
+            "wind_waves": 0.7,
+            "secondary_swell": 0.144,
+            "wind": 0.343
           },
           "inputs": {
-            "swell_m": 0.42,
-            "swell_period_s": 6.05,
-            "swell_off_bow_deg": 76,
-            "wind_wave_m": 1.42,
-            "secondary_swell_m": 0.22,
-            "wind_kt": 15.2
+            "swell_m": 0.82,
+            "swell_period_s": 5.15,
+            "swell_off_bow_deg": 74,
+            "wind_wave_m": 1.0,
+            "secondary_swell_m": 0.18,
+            "wind_kt": 17.2
           },
           "resonance_x": 1.3,
-          "beam_x": 1.485
+          "beam_x": 1.48
         },
         {
           "point": 4,
           "lat": 9.2437,
           "lon": 106.7628,
           "eta": "10:00",
-          "score": 2.21,
+          "score": 2.85,
           "contributions": {
-            "swell": 0.762,
-            "wind_waves": 0.994,
+            "swell": 1.685,
+            "wind_waves": 0.672,
             "secondary_swell": 0.176,
-            "wind": 0.282
+            "wind": 0.314
           },
           "inputs": {
-            "swell_m": 0.4,
-            "swell_period_s": 6.15,
-            "swell_off_bow_deg": 69,
-            "wind_wave_m": 1.42,
+            "swell_m": 0.9,
+            "swell_period_s": 5.25,
+            "swell_off_bow_deg": 62,
+            "wind_wave_m": 0.96,
             "secondary_swell_m": 0.22,
-            "wind_kt": 14.1
+            "wind_kt": 15.7
           },
           "resonance_x": 1.3,
-          "beam_x": 1.466
+          "beam_x": 1.44
         },
         {
           "point": 5,
           "lat": 8.9706,
           "lon": 106.6822,
           "eta": "10:00",
-          "score": 2.09,
+          "score": 2.42,
           "contributions": {
-            "swell": 0.727,
-            "wind_waves": 0.798,
-            "secondary_swell": 0.272,
-            "wind": 0.292
+            "swell": 1.469,
+            "wind_waves": 0.602,
+            "secondary_swell": 0.096,
+            "wind": 0.248
           },
           "inputs": {
-            "swell_m": 0.4,
-            "swell_period_s": 5.9,
-            "swell_off_bow_deg": 53,
-            "wind_wave_m": 1.14,
-            "secondary_swell_m": 0.34,
-            "wind_kt": 14.6
+            "swell_m": 0.84,
+            "swell_period_s": 5.05,
+            "swell_off_bow_deg": 44,
+            "wind_wave_m": 0.86,
+            "secondary_swell_m": 0.12,
+            "wind_kt": 12.4
           },
           "resonance_x": 1.3,
-          "beam_x": 1.398
+          "beam_x": 1.346
         },
         {
           "point": 6,
           "lat": 8.7917,
           "lon": 106.625,
           "eta": "11:00",
-          "score": 1.65,
+          "score": 1.56,
           "contributions": {
-            "swell": 0.718,
-            "wind_waves": 0.532,
+            "swell": 0.728,
+            "wind_waves": 0.504,
             "secondary_swell": 0.112,
-            "wind": 0.292
+            "wind": 0.22
           },
           "inputs": {
-            "swell_m": 0.44,
-            "swell_period_s": 5.2,
-            "swell_off_bow_deg": 31,
-            "wind_wave_m": 0.76,
+            "swell_m": 0.42,
+            "swell_period_s": 5.25,
+            "swell_off_bow_deg": 42,
+            "wind_wave_m": 0.72,
             "secondary_swell_m": 0.14,
-            "wind_kt": 14.6
+            "wind_kt": 11.0
           },
           "resonance_x": 1.3,
-          "beam_x": 1.256
+          "beam_x": 1.333
         }
       ]
     },
@@ -887,9 +712,9 @@
       "leg": "CD_TO_VT",
       "label": "Con Dao → Vung Tau",
       "depart": "2026-11-20T13:00:00+07:00",
-      "score": 2.9,
+      "score": 2.73,
       "rating": "RED",
-      "previous_rating": null,
+      "previous_rating": "RED",
       "worst_waypoint": 2,
       "missing_points": 0,
       "in_closure_window": true,
@@ -899,161 +724,161 @@
           "lat": 8.7917,
           "lon": 106.625,
           "eta": "13:00",
-          "score": 1.89,
+          "score": 1.48,
           "contributions": {
-            "swell": 0.875,
-            "wind_waves": 0.56,
+            "swell": 0.306,
+            "wind_waves": 0.714,
             "secondary_swell": 0.096,
             "wind": 0.361
           },
           "inputs": {
-            "swell_m": 0.5,
-            "swell_period_s": 5.65,
-            "swell_off_bow_deg": 44,
-            "wind_wave_m": 0.8,
+            "swell_m": 0.18,
+            "swell_period_s": 6.05,
+            "swell_off_bow_deg": 38,
+            "wind_wave_m": 1.02,
             "secondary_swell_m": 0.12,
             "wind_kt": 18.0
           },
           "resonance_x": 1.3,
-          "beam_x": 1.346
+          "beam_x": 1.307
         },
         {
           "point": 1,
           "lat": 8.9706,
           "lon": 106.6822,
           "eta": "14:00",
-          "score": 2.6,
+          "score": 2.28,
           "contributions": {
-            "swell": 1.272,
-            "wind_waves": 0.826,
-            "secondary_swell": 0.176,
+            "swell": 0.927,
+            "wind_waves": 0.798,
+            "secondary_swell": 0.224,
             "wind": 0.328
           },
           "inputs": {
-            "swell_m": 0.72,
-            "swell_period_s": 6.05,
-            "swell_off_bow_deg": 46,
-            "wind_wave_m": 1.18,
-            "secondary_swell_m": 0.22,
+            "swell_m": 0.54,
+            "swell_period_s": 6.1,
+            "swell_off_bow_deg": 40,
+            "wind_wave_m": 1.14,
+            "secondary_swell_m": 0.28,
             "wind_kt": 16.4
           },
           "resonance_x": 1.3,
-          "beam_x": 1.359
+          "beam_x": 1.32
         },
         {
           "point": 2,
           "lat": 9.2437,
           "lon": 106.7628,
           "eta": "14:00",
-          "score": 2.9,
+          "score": 2.73,
           "contributions": {
-            "swell": 1.272,
-            "wind_waves": 1.008,
-            "secondary_swell": 0.288,
+            "swell": 1.263,
+            "wind_waves": 0.896,
+            "secondary_swell": 0.24,
             "wind": 0.33
           },
           "inputs": {
-            "swell_m": 0.72,
-            "swell_period_s": 6.4,
-            "swell_off_bow_deg": 46,
-            "wind_wave_m": 1.44,
-            "secondary_swell_m": 0.36,
+            "swell_m": 0.7,
+            "swell_period_s": 6.15,
+            "swell_off_bow_deg": 51,
+            "wind_wave_m": 1.28,
+            "secondary_swell_m": 0.3,
             "wind_kt": 16.5
           },
           "resonance_x": 1.3,
-          "beam_x": 1.359
+          "beam_x": 1.388
         },
         {
           "point": 3,
           "lat": 9.5168,
           "lon": 106.8433,
           "eta": "15:00",
-          "score": 2.3,
+          "score": 2.37,
           "contributions": {
-            "swell": 0.506,
-            "wind_waves": 1.274,
-            "secondary_swell": 0.144,
+            "swell": 0.71,
+            "wind_waves": 1.078,
+            "secondary_swell": 0.208,
             "wind": 0.371
           },
           "inputs": {
-            "swell_m": 0.26,
-            "swell_period_s": 6.9,
-            "swell_off_bow_deg": 85,
-            "wind_wave_m": 1.82,
-            "secondary_swell_m": 0.18,
+            "swell_m": 0.38,
+            "swell_period_s": 6.65,
+            "swell_off_bow_deg": 61,
+            "wind_wave_m": 1.54,
+            "secondary_swell_m": 0.26,
             "wind_kt": 18.6
           },
           "resonance_x": 1.3,
-          "beam_x": 1.498
+          "beam_x": 1.437
         },
         {
           "point": 4,
           "lat": 9.7898,
           "lon": 106.9239,
           "eta": "15:00",
-          "score": 2.3,
+          "score": 2.09,
           "contributions": {
-            "swell": 0.654,
-            "wind_waves": 1.12,
-            "secondary_swell": 0.16,
+            "swell": 0.503,
+            "wind_waves": 1.078,
+            "secondary_swell": 0.144,
             "wind": 0.367
           },
           "inputs": {
-            "swell_m": 0.34,
-            "swell_period_s": 7.1,
-            "swell_off_bow_deg": 74,
-            "wind_wave_m": 1.6,
-            "secondary_swell_m": 0.2,
+            "swell_m": 0.26,
+            "swell_period_s": 6.9,
+            "swell_off_bow_deg": 78,
+            "wind_wave_m": 1.54,
+            "secondary_swell_m": 0.18,
             "wind_kt": 18.4
           },
           "resonance_x": 1.3,
-          "beam_x": 1.48
+          "beam_x": 1.489
         },
         {
           "point": 5,
           "lat": 10.0629,
           "lon": 107.0044,
           "eta": "16:00",
-          "score": 2.29,
+          "score": 1.87,
           "contributions": {
-            "swell": 0.647,
-            "wind_waves": 0.994,
-            "secondary_swell": 0.256,
+            "swell": 0.312,
+            "wind_waves": 1.064,
+            "secondary_swell": 0.096,
             "wind": 0.395
           },
           "inputs": {
-            "swell_m": 0.36,
-            "swell_period_s": 6.45,
-            "swell_off_bow_deg": 50,
-            "wind_wave_m": 1.42,
-            "secondary_swell_m": 0.32,
+            "swell_m": 0.16,
+            "swell_period_s": 7.15,
+            "swell_off_bow_deg": 85,
+            "wind_wave_m": 1.52,
+            "secondary_swell_m": 0.12,
             "wind_kt": 19.8
           },
           "resonance_x": 1.3,
-          "beam_x": 1.382
+          "beam_x": 1.498
         },
         {
           "point": 6,
           "lat": 10.2917,
           "lon": 107.0417,
           "eta": "17:00",
-          "score": 1.84,
+          "score": 1.76,
           "contributions": {
-            "swell": 0.957,
-            "wind_waves": 0.574,
-            "secondary_swell": 0.064,
+            "swell": 0.805,
+            "wind_waves": 0.63,
+            "secondary_swell": 0.08,
             "wind": 0.244
           },
           "inputs": {
-            "swell_m": 0.5,
-            "swell_period_s": 5.9,
-            "swell_off_bow_deg": 71,
-            "wind_wave_m": 0.82,
-            "secondary_swell_m": 0.08,
+            "swell_m": 0.42,
+            "swell_period_s": 6.0,
+            "swell_off_bow_deg": 72,
+            "wind_wave_m": 0.9,
+            "secondary_swell_m": 0.1,
             "wind_kt": 12.2
           },
           "resonance_x": 1.3,
-          "beam_x": 1.472
+          "beam_x": 1.475
         }
       ]
     }
