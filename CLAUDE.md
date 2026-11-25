@@ -62,7 +62,14 @@ generality or polish.
     and a run that still fails leaves the previous `state.json` in place.
     The original ~1.5 min retry window failed three runs in a row on 2026-10-18/19.
     Retries were lengthened and the job capped at 20 min in PR #6;
-    whether that's enough is tracked in an issue.
+    whether that's enough is tracked in an issue (#16).
+    **Decision (2026-11-25): accept occasional one-off failures.** Two more
+    failed runs in November: one Open-Meteo 429 rate limit (not retried,
+    since 4xx counts as our bug) and one full timeout. The next run fixed
+    both. No code change: GitHub's failure emails stay as the alarm (one now
+    and then is a hiccup; several in a row means it's really broken). Also:
+    GitHub delays or skips scheduled runs, so in practice there are 2–3
+    runs a day, often 10–12 h apart, not 4.
   - **raw.githubusercontent.com cache bug (found 2026-10-19):** its CDN
     served a stale *compressed* copy of `state.json` 18 h after a newer
     commit (despite `max-age=300`), while uncompressed requests were
