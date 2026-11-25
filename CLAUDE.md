@@ -167,8 +167,8 @@ generality or polish.
   `HUDSender.swift`; links `condaoferry://home`, `/day/<yyyy-MM-dd>`,
   `/hud/refresh` (Info.plist outside the synced folder). How the HUD projects
   fit: `~/Claude/Projects/Meta Docs/HUD System.md`. Read `docs/INBOX.md` at
-  the start of a session. Open: flashing the Vung Tau → Con Dao days needs a
-  controller feature (its inbox).
+  the start of a session. Vung Tau → Con Dao days flash (the controller's
+  `pulse`, added 2026-11-25).
 - **Backlog lives in GitHub Issues** (set up 2026-10-20):
   https://github.com/schlafin/condao-ferry-watch/issues. Every planned PR,
   future idea and parked item is an issue there, not in this file. Labels:

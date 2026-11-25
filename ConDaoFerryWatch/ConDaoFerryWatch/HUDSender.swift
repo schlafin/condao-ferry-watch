@@ -9,7 +9,7 @@
 //
 //  Cells 1-6 = the next six days from tomorrow (Vietnam dates), each in its
 //  departure's gradient colour; Monday white (no ferry); no data black;
-//  cells 7-14 white. Sent after every fetch and when the setting changes.
+//  cells 7-14 white. Vung Tau → Con Dao days flash (the controller's pulse). Sent after every fetch and when the setting changes.
 //
 
 import AppKit
@@ -87,6 +87,7 @@ final class HUDSender {
         let home = "\(app)://home"
         var cells = Array(repeating: white, count: 14)
         var links = Array(repeating: home, count: 14)
+        var pulse: [Int] = []   // 1-based cells that flash
         for i in 0..<6 {
             let day = cal.date(byAdding: .day, value: i + 1, to: start)!
             if cal.component(.weekday, from: day) == 2 { continue }   // Monday: no ferry, white
@@ -98,13 +99,19 @@ final class HUDSender {
             }
             cells[i] = dep.rating == "NO_DATA" ? black : hex(score: dep.score)
             links[i] = "\(app)://day/\(HUDCalendar.dayString(day))"
+            // Vung Tau → Con Dao days flash, Con Dao → Vung Tau stay still.
+            // Not in peak season, when both run daily and every key would flash.
+            let outboundOnly = deps.allSatisfy { $0.leg == "VT_TO_CD" }
+            if outboundOnly && dep.rating != "NO_DATA" { pulse.append(i + 1) }
         }
-        return [
+        var moment: [String: Any] = [
             "from": HUDCalendar.iso(start),
             "cells": cells,
             "links": links,
             "note": "Ferry: 6 days from \(HUDCalendar.shortDay(cal.date(byAdding: .day, value: 1, to: start)!))",
         ]
+        if !pulse.isEmpty { moment["pulse"] = ["cells": pulse] }
+        return moment
     }
 
     /// The app's gradient (Palette.color(score:)): hue 120° green at 0, 60°
