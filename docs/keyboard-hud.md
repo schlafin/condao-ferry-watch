@@ -21,9 +21,10 @@ key:    `    1    2    3    4    5  |  6 ... Backspace
 - **Monday is white:** no ferry. It also shows where the week turns, so the row reads without counting days.
 - **No forecast data = black (unlit).** The app's gray would look like dim white on a key.
 - **Vung Tau → Con Dao days flash; Con Dao → Vung Tau days stay still.** Michael lives in Vung Tau and looks at
-  the outbound crossing first; the return days show the trend. Flashing needs a controller feature that doesn't
-  exist yet (asked for in its inbox, 2026-11-25); until then all days are still.
-- **Peak timetable** (both directions daily): the key shows Vung Tau → Con Dao.
+  the outbound crossing first; the return days show the trend. Uses the controller's `pulse` (added 2026-11-25):
+  the key dims and brightens in its own colour every 2 s. Days without data don't flash.
+- **Peak timetable** (both directions daily): the key shows Vung Tau → Con Dao, and nothing flashes (every key
+  would, which says nothing).
 - **Cells 7-14 are white.** Today isn't shown: Michael books at the last minute, and the app shows today.
 
 ## Keys (hold Mouse, press what you see)
