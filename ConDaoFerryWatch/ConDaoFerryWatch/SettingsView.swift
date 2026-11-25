@@ -24,6 +24,7 @@ struct SettingsView: View {
     @AppStorage(AppSettings.showInMenuBarKey) private var showInMenuBar = false
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
     @State private var loginError: String?
+    @Bindable private var hud = HUDSender.shared
 
     var body: some View {
         Form {
@@ -46,6 +47,13 @@ struct SettingsView: View {
                 if let loginError {
                     Text(loginError).font(.caption).foregroundStyle(.red)
                 }
+            }
+            Section {
+                Toggle("Keyboard HUD", isOn: $hud.enabled)
+                Text("Shows the next six days on the keyboard's top row, through the HUD Controller. \(hud.status)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .formStyle(.grouped)

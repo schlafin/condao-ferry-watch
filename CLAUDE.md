@@ -161,6 +161,14 @@ generality or polish.
   fire notifications for meaningless changes.
 - **Removed after review: the "was YELLOW" badge.** A single previous value
   isn't informative enough.
+- **Keyboard HUD (built 2026-11-25):** the app is a client of the HUD Controller
+  (`~/Claude/Projects/hud-controller`), which plays a six-day outlook on the
+  UHK keyboard's top row. Design and decisions: `docs/keyboard-hud.md`; code:
+  `HUDSender.swift`; links `condaoferry://home`, `/day/<yyyy-MM-dd>`,
+  `/hud/refresh` (Info.plist outside the synced folder). How the HUD projects
+  fit: `~/Claude/Projects/Meta Docs/HUD System.md`. Read `docs/INBOX.md` at
+  the start of a session. Open: flashing the Vung Tau → Con Dao days needs a
+  controller feature (its inbox).
 - **Backlog lives in GitHub Issues** (set up 2026-10-20):
   https://github.com/schlafin/condao-ferry-watch/issues. Every planned PR,
   future idea and parked item is an issue there, not in this file. Labels:

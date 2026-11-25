@@ -43,8 +43,52 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // Launched at login in menu-bar mode: start quietly in the menu bar.
         if AppSettings.launchedAtLogin && showInMenuBar {
             NSApp.setActivationPolicy(.accessory)
-        } else {
-            showMainWindow()
+            startingUp = false
+            return
+        }
+        // Otherwise show the window, unless the app was started by a link (a
+        // keyboard HUD key, or the HUD Controller asking for a refresh). The
+        // link only arrives after launch, so wait a moment for it.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+            startingUp = false
+            if !startedByLink { showMainWindow() }
+        }
+    }
+
+    /// True until the app has decided how it started.
+    private var startingUp = true
+    private var startedByLink = false
+
+    // MARK: - Links (docs/keyboard-hud.md)
+
+    /// condaoferry://home, condaoferry://day/2026-11-26 (opens that day's
+    /// detail) and condaoferry://hud/refresh (the HUD Controller asking for a
+    /// new schedule: fetch and send without showing anything, then quit if
+    /// the app was started only for it).
+    func application(_ application: NSApplication, open urls: [URL]) {
+        for url in urls where url.scheme == HUDSender.app {
+            if startingUp { startedByLink = true }
+            switch url.host {
+            case "hud":
+                guard url.path == "/refresh" else { continue }
+                let startedForIt = startedByLink && window == nil
+                if startedForIt { NSApp.setActivationPolicy(.accessory) }   // no Dock icon
+                Task {
+                    // Wait for a fetch already under way (the one at launch),
+                    // else fetch now. A successful fetch sends the HUD.
+                    let store = FerryStore.shared
+                    while store.isRefreshing { try? await Task.sleep(for: .milliseconds(100)) }
+                    if (store.lastFetched ?? .distantPast) < .now.addingTimeInterval(-60) {
+                        await store.refresh()
+                    }
+                    if startedForIt && window == nil { NSApp.terminate(nil) }
+                }
+            case "day":
+                Navigator.shared.focusDay = url.lastPathComponent
+                showMainWindow()
+            default:
+                showMainWindow()
+            }
         }
     }
 
@@ -74,6 +118,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             if !window.setFrameUsingName("MainWindow") { window.center() }
             self.window = window
         }
+        NSApp.unhide(nil)
+        if window?.isMiniaturized == true { window?.deminiaturize(nil) }
         window?.makeKeyAndOrderFront(nil)
         NSApp.activate()
         Task { await FerryStore.shared.refresh() }
