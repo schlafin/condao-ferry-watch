@@ -62,6 +62,7 @@ final class FerryStore {
             lastError = nil
             lastFetched = .now
             await postUnseen(newState.events)
+            await HUDSender.shared.send()   // keyboard HUD (docs/keyboard-hud.md)
         } catch {
             lastError = error.localizedDescription
         }

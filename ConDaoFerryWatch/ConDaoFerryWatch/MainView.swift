@@ -14,6 +14,7 @@ import SwiftUI
 struct MainView: View {
     let store: FerryStore
     @State private var expanded: Set<String> = []
+    private let navigator = Navigator.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -30,6 +31,7 @@ struct MainView: View {
             }
             .padding()
 
+            ScrollViewReader { proxy in
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     if let state = store.state {
@@ -42,6 +44,7 @@ struct MainView: View {
                                             if expanded.contains(dep.id) { expanded.remove(dep.id) }
                                             else { expanded.insert(dep.id) }
                                         }
+                                        .id(dep.id)
                                     }
                                 }
                             }
@@ -58,8 +61,28 @@ struct MainView: View {
                 }
                 .padding([.horizontal, .bottom])
             }
+            .onAppear { openFocusedDay(proxy) }
+            .onChange(of: navigator.focusDay) { openFocusedDay(proxy) }
+            .onChange(of: store.state?.generatedAt) { openFocusedDay(proxy) }
+            }
         }
         .frame(minWidth: 400, minHeight: 300)
+    }
+
+    /// A keyboard HUD key asked for a day (condaoferry://day/2026-11-26):
+    /// open that departure's detail and scroll to it. Waits for the forecast
+    /// if it hasn't loaded yet.
+    private func openFocusedDay(_ proxy: ScrollViewProxy) {
+        guard let dayString = navigator.focusDay,
+              let day = HUDCalendar.day(from: dayString),
+              let deps = store.state?.departures else { return }
+        let onDay = deps.filter { HUDCalendar.ict.isDate($0.depart, inSameDayAs: day) }
+        navigator.focusDay = nil
+        guard let dep = onDay.first(where: { $0.leg == "VT_TO_CD" }) ?? onDay.first else { return }
+        expanded = [dep.id]
+        DispatchQueue.main.async {
+            withAnimation { proxy.scrollTo(dep.id, anchor: .top) }
+        }
     }
 
     private func footer(_ state: FerryState) -> some View {
