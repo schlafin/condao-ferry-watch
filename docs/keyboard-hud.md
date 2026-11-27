@@ -1,7 +1,7 @@
 # Keyboard HUD
 
 Agreed with Michael 2026-11-25. The ferry app is an **ambient HUD client** of the HUD Controller: it describes a
-row, the controller plays it on the UHK's top row. How the parts fit: `~/Claude/Projects/Meta Docs/HUD System.md`;
+row, the controller plays it on the UHK's top row. How the parts fit: `~/Claude/Projects/Meta Docs/Systems/HUD System/HUD System.md`;
 the controller's side: `~/Claude/Projects/hud-controller/docs/PROTOCOL.md`.
 
 ## What the row shows

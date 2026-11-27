@@ -1,7 +1,7 @@
 # Inbox: Con Dao Ferry Watch
 
 Things other projects handed to this one. Read it at the start of a session. How inboxes work:
-`~/Claude/Projects/Meta Docs/HUD System.md`.
+`~/Claude/Projects/Meta Docs/Systems/HUD System/HUD System.md`.
 
 ## Open
 

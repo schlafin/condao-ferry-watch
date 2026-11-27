@@ -166,7 +166,7 @@ generality or polish.
   UHK keyboard's top row. Design and decisions: `docs/keyboard-hud.md`; code:
   `HUDSender.swift`; links `condaoferry://home`, `/day/<yyyy-MM-dd>`,
   `/hud/refresh` (Info.plist outside the synced folder). How the HUD projects
-  fit: `~/Claude/Projects/Meta Docs/HUD System.md`. Read `docs/INBOX.md` at
+  fit: `~/Claude/Projects/Meta Docs/Systems/HUD System/HUD System.md`. Read `docs/INBOX.md` at
   the start of a session. Vung Tau → Con Dao days flash (the controller's
   `pulse`, added 2026-11-25).
 - **Backlog lives in GitHub Issues** (set up 2026-10-20):
